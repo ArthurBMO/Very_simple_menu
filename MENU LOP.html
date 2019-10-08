@@ -1,0 +1,208 @@
+<script>
+//all variables
+var escolha, salg, qnt, recieved, troco, precoT=0, nEscolha, yesNo, text=" ", qntMain, salgMain, nEscolhaMain, find, choice;
+var salgados=[{nome:"sorvete", preco:10, qnt:15}];
+
+while(escolha!=0){
+    escolha=parseInt(prompt("Digite 1 para compra de salgados[..]\n4 para adicionar produtos.\nDigite 0 para fechar."));//tells the program what the user wants
+
+    if(escolha==1){
+        //resets variables
+        salg=0, recieved=0, troco=0, precoT=0, nEscolha=0, qntMain=0, salgMain=0, nEscolhaMain=0, text="";
+
+        //asks which salgado the user wants
+        nEscolha=parseInt(prompt("Em número, qual salgado desejas?\nDigite 0 para fechar\n\n"+DumpCustomers()));
+        //exits the program
+        if(nEscolha==0){
+            break;
+        }
+        //safegard
+        while(nEscolha<1||nEscolha>salgados.length){
+            nEscolha=parseInt(prompt("Lembre-se, deve ser um número entre "+1+" e "+salgados.length+"\n"+DumpCustomers()));
+        }
+        //to access the correct place of the vector
+        nEscolha=nEscolha-1;
+
+        //checks if the salgado is available, it not enters if
+        if(salgados[nEscolha].qnt==0){
+            alert("Este salgado infelizmente acabou, escolha outro");
+        }
+        //if it is available, enters else and calls function for buying
+        else{
+            Main();
+        }
+    }
+      //to edit salgados
+      if(escolha==4){
+          find=parseInt(prompt("Digite 0 para adicionar um novo produto\nDigite o número de algum salgado\n"+DumpCustomers()));
+          //safegard
+          while(find<0||find>salgados.length){
+              find=parseInt(prompt("Lembre-se, 0 para adicionar um novo produto\nDigite o número de algum salgado\n"+DumpCustomers()));
+          }
+          //find the cause of if not working when &&find<salgados.length
+          if(find>=1){
+              //find -- for it to become our vector position
+              find--;
+              choice=parseInt(prompt("Você quer adicionar mais(1), remover(2) ou mudar o preço(3)?\nComo sempre, 0 para fechar."));
+              switch (choice)
+              {
+                //exits the program
+                case 0:
+                    escolha=0;
+                    break;
+                //adds more products
+                case 1:
+                    qnt=parseInt(prompt("QUANTIDADE MAIS"));
+                    while(qnt<=0){
+                        qnt=parseInt(prompt("POSITIVO"));
+                    }
+                    salgados[find].qnt+=qnt;
+                    break;
+                //subtracts products
+                case 2:
+                    qnt=parseInt(prompt("QUANTIDADE MENOS"));
+                    while(qnt>salgados[find].qnt||qnt<0){
+                        qnt=parseInt(prompt("Deixe de querer quebrar o programa."));
+                    }
+                    salgados[find].qnt-=qnt;
+                    break;
+              //fixes price
+               case 3:
+                   choice=parseFloat(prompt("Diga o novo preço"));
+                   while(choice<0){
+                       choice=parseFloat(prompt("you cego?"));kkkk
+                   }
+                   salgados[find].preco=choice;
+                   break;
+              //in case the user tries to break everything
+              default:
+                  while(choice!=3||choice!=2||choice!=1||choice!=0){
+                      choice=parseInt(prompt("Número errado. Para adicionar(1), remover(2) ou mudar o preço(3).\nComo sempre, 0 para sair."));
+                  }
+              }
+          //to add a new salgado to the list
+          }else if(find==0){
+              salgados.push({nome:prompt("Insira o nome do salgado."), preco:parseFloat(prompt("Insira o preço.")), qnt:parseInt(prompt("Insira a quantidade"))});
+              escolha=parseInt(prompt("Deseja adicionar outro produto? Se sim, insira '4'.\nSe não, deixe em branco.\nPara fechar, insira'0'."));
+              //safegard
+              while(escolha<0||escolha>4){
+                  escolha=parseInt(prompt("Quebre o programa n, macho\n\nDeseja adicionar outro produto? Se sim, insira '4'.\nSe não, deixe em branco.\nPara fechar, insira'0'."));
+              }
+          }
+      }
+}
+
+function Main()
+{
+    //checks if the user's salgado exists
+    if(nEscolha>=0&&nEscolha<salgados.length){
+
+        //"Main" variables to keep the first salgado from the multiple ones, if there is
+        nEscolhaMain=nEscolha;
+        salg=salgados[nEscolha].nome;
+        salgMain=salgados[nEscolha].nome;
+
+        //how many salgs
+        qnt=parseInt(prompt("Quantos "+salg+" você desejas?"));
+
+        //checks if qnt of salgados is valid, if so, prompts to enter a valid qnt
+        while(qnt>salgados[nEscolha].qnt||qnt<=0||(qnt==null&&qnt=="")){
+            qnt=parseInt(prompt("Nao temos essa quantidade de "+salg+". Digite algo menor ou igual a "+salgados[nEscolha].qnt));
+        }
+
+        //another "Main" variable
+        qntMain=qnt;
+
+        //asks if user wants to add more things
+        yesNo=prompt("Você deseja adicionar outro item ao carrinho? 's'(para sim) ou 'n'(para nao)?");
+        yesNo=yesNo.toLowerCase();
+
+        //if yes, calls function to add as many salgs as the user desires
+        if(yesNo=="s"){
+            Multiple();
+        }
+        /*else if(yesNo!="s"||yesNo!="n"){
+            while(yesNo!="s"||yesNo!="n"){
+                yesNo=prompt("Tente novamente. Insira 's' para adicionar algo ou 'n' para continuar");
+                if(yesNo=="s"){
+                    Multiple();
+                }else if(yesNo=='n'){
+                    break;
+                }
+            }
+        }*/
+        PayMent();
+    }
+}
+//function for the user to keep adding different kinds of salgado
+function Multiple()
+{
+    while(yesNo.toLowerCase()=='s'){
+        nEscolha=0, qnt=0, salg=0;
+
+        nEscolha=parseInt(prompt("Em número, qual item desejas adicionar ao carrinho?\n"+DumpCustomers()));
+        while(nEscolha<1||nEscolha>salgados.length){
+            nEscolha=parseInt(prompt("Lembre-se, deve ser um número entre "+1+" e "+salgados.length+"\n"+DumpCustomers()));
+        }
+        nEscolha=nEscolha-1;
+
+        if(nEscolha>=0&&nEscolha<salgados.length){
+            //to keep things small
+            salg=salgados[nEscolha].nome;
+
+            //how many salgs
+            qnt=parseInt(prompt("Quantos "+salg+" você desejas?"));
+
+            //checks if qnt of salgados is valid, if so, prompts to enter a valid qnt
+            while(qnt>salgados[nEscolha].qnt){
+                qnt=parseInt(prompt("Nao temos essa quantidade toda de "+salg+". Digite algo menor ou igual a "+salgados[nEscolha].qnt));
+            }
+
+            //text holds and indents the quantity and name of salgados
+            text=text+qnt+" "+salg+"\n";
+            precoT=precoT+salgados[nEscolha].preco*qnt;
+            salgados[nEscolha].qnt-=qnt;
+            //asks if user wants to add more things
+            yesNo=prompt("Você deseja adicionar outro item ao carrinho? 's'(para sim) ou 'n'(para nao)?");
+        }
+    }
+}
+
+//obvious function, recieves the money and calculates the change
+function PayMent()
+{
+    //recieves the price times the quantity user wants
+    precoT=precoT+(salgados[nEscolhaMain].preco*qnt);
+
+    //asks user for the payment
+    recieved=parseFloat(prompt(qntMain+" "+salgMain+"\n"+text+" custarao R$"+precoT+"."));
+
+    //checks if payment is indeed enough
+    while(recieved<precoT){
+        recieved=parseFloat(prompt("Desculpe-me, mas ainda falta dinheiro para completar a compra. O total ficou R$"+precoT));
+    }
+
+    //removing the quantity bought and calculating change
+    salgados[nEscolhaMain].qnt-=qntMain;
+    troco=recieved-precoT;
+    alert("Seu troco é R$"+troco+"\nObrigado por comprar, amigão!");
+}
+
+//to display the salgados and the quantity available
+function DumpCustomers()
+{
+    var qualquer=" ", text=" ";
+    for(var i=0; i<salgados.length; i++){
+        //usual display table of salgados, quantity and price
+        if(salgados[i].qnt>0){
+            qualquer=(i+1)+" para "+salgados[i].nome+"("+salgados[i].qnt+" restantes) - R$"+salgados[i].preco;
+            text=text+qualquer+"\n";
+        }//in case one of the salgs runs out
+        else if(salgados[i].qnt<=0){
+            qualquer=salgados[i].nome+" Acabou";
+            text=text+qualquer+"\n";
+        }
+    }
+  return text;
+}
+</script>
