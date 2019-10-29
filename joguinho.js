@@ -9,10 +9,10 @@ var star = [];
 var eliX = 650, eliY = 100, rotor = 575, rotory = 54, bombY = 150;
 var cloudx = 100, cloudy = 100;
 var img;
-var font;
+//var font;
 function preload(){
   //font = loadFont("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
-  img = loadImage("f.png");
+  //img = loadImage("https://chrismalnu.files.wordpress.com/2016/01/f-15-cipher-copy.png?w=680");
 }
 function setup() {
   createCanvas(400, 400);
@@ -30,7 +30,6 @@ function draw() {
   //this is the fast thinking name
   fill('#d0efff');
   textSize(50);
-  //textFont(font);
   text('Fast Thinking', 35, 90);
   //for the main text
   textSize(25);
@@ -91,12 +90,14 @@ function play() {
   noStroke();
   //the plane itself
   //body
-  image(img, eliX, eliY, 50, 50);
+  fill('grey');
+  ellipse(eliX, eliY, 300, 100)
+  //image(img, eliX, eliY);
   fill('white')
   //wing
-  //ellipse(eliX, eliY, 150, 50)
+  ellipse(eliX, eliY, 150, 50)
   //rotor
-  //rect(rotor, rotory, 2, 100)
+  rect(rotor, rotory, 2, 100)
   text('eiwufhwieufhwiehfeiwuhewiuhfwufweufywuefygiuwgyefuwgyu', 20, 390)
 
 }
