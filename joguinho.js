@@ -11,7 +11,7 @@ var cloudx = 100, cloudy = 100;
 var img;
 var font;
 function preload(){
-  font = loadFont("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
+  //font = loadFont("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
   img = loadImage("f.png");
 }
 function setup() {
@@ -30,7 +30,7 @@ function draw() {
   //this is the fast thinking name
   fill('#d0efff');
   textSize(50);
-  textFont(font);
+  //textFont(font);
   text('Fast Thinking', 35, 90);
   //for the main text
   textSize(25);
@@ -76,28 +76,28 @@ function draw() {
 
 function play() {
   background(0);
-  // moon
-  // ellipse(50, 70, 50, 50);
-  // fill('black')
-  // ellipse(60, 60, 50, 50);
-  // for the plane to move
-  // eliX -= 1
-  // rotor -= 1
-  // for the plane to move out of frame, upwards
-  // if (eliX <= 250 && rotor <= 175) {
-  //   eliY -= 10
-  //   rotory -= 10
-  // }
-  // noStroke();
-  // the plane itself
-  // body
-  image(img, 0, 0);
+  //moon
+  ellipse(50, 70, 50, 50);
+  fill('black')
+  ellipse(60, 60, 50, 50);
+  //for the plane to move
+  eliX -= 1
+  rotor -= 1
+  //for the plane to move out of frame, upwards
+  if (eliX <= 250 && rotor <= 175) {
+    eliY -= 10
+    rotory -= 10
+  }
+  noStroke();
+  //the plane itself
+  //body
+  image(img, eliX, eliY, 50, 50);
   fill('white')
   //wing
   //ellipse(eliX, eliY, 150, 50)
   //rotor
   //rect(rotor, rotory, 2, 100)
-  text('eiwufhwieufhwiehfeiwuhewiuhfwufweufywuefygiuwgyefuwgyu', 0, 0)
+  text('eiwufhwieufhwiehfeiwuhewiuhfwufweufywuefygiuwgyefuwgyu', 20, 390)
 
 }
 
