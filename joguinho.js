@@ -6,61 +6,52 @@ var telaAtiva;
 var starX;
 var starY;
 var star = [];
-var eliX = 650, eliY = 100, rotor = 575, rotory = 54, bombY = 150;
+var eliX = 0, eliY = 210;
 var cloudx = 100, cloudy = 100;
-var img;
-//var font;
-function preload(){
-  //font = loadFont("https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap");
-  //img = loadImage("https://chrismalnu.files.wordpress.com/2016/01/f-15-cipher-copy.png?w=680");
+var moonY=65, back=0, sunY=0;
+var moon;
+
+function preload() {
+  //moon = loadImage('moon.png');
 }
+
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(800, 600);
 }
 
 function draw() {
-  //I'm still figuring stuff out
-  background('black');
-  //textFont(font);
+
+  background(0);
+
   //this is the moon
-  ellipse(50, 70, 50, 50);
-  fill('black')
-  ellipse(60, 60, 50, 50);
-  noStroke();
+  //ellipse(50, 70, 50, 50);
   //this is the fast thinking name
   fill('#d0efff');
   textSize(50);
-  text('Fast Thinking', 35, 90);
+  text('Fast Thinking', 228.5, 90);
   //for the main text
   textSize(25);
   fill('#2a9df4');
-  text('Jogar', 170, 160);
-  text('Regras', 160, 240);
-  text('Sair', 180, 320);
+  text('Jogar', 350, 260);
+  text('Regras', 340, 400);
   //to select
   if (y == 75) {
     choice = 1;
     fill('white');
-    text('Δ', 140, 160);
-    text('Jogar', 170, 160);
+    text('Δ', 320, 260);
+    text('Jogar', 350, 260);
   }
   if (y == 175) {
     choice = 2;
     fill('white');
-    text('Δ', 130, 240)
-    text('Regras', 160, 240);
-  }
-  if (y == 275) {
-    choice = 3;
-    fill('white');
-    text('Δ', 150, 320)
-    text('Sair', 180, 320);
+    text('Δ', 310, 400)
+    text('Regras', 340, 400);
   }
   //some tips
   fill('white');
   textSize(16);
-  text('[selecionar: enter]', 20, 390);
-  text('[mover: setas]', 250, 390);
+  text('[selecionar: enter]', 20, 590);
+  text('[mover: setas]', 650, 590);
   //when the player presses enter
   switch (telaAtiva) {
     case 1:
@@ -74,32 +65,41 @@ function draw() {
 }
 
 function play() {
-  background(0);
-  //moon
-  ellipse(50, 70, 50, 50);
-  fill('black')
-  ellipse(60, 60, 50, 50);
-  //for the plane to move
-  eliX -= 1
-  rotor -= 1
-  //for the plane to move out of frame, upwards
-  if (eliX <= 250 && rotor <= 175) {
-    eliY -= 10
-    rotory -= 10
+  background(back,back,back);
+  if(back>=0&&back<=232){
+    back+=40;
   }
-  noStroke();
-  //the plane itself
-  //body
-  fill('grey');
-  ellipse(eliX, eliY, 300, 100)
-  //image(img, eliX, eliY);
+  //moon
+    ellipse(50, moonY+5, 50, 50);
+  if(moonY>0&&sunY>=40){
+    moonY+=20;
+  }
+  //sun
   fill('white')
-  //wing
-  ellipse(eliX, eliY, 150, 50)
-  //rotor
-  rect(rotor, rotory, 2, 100)
-  text('eiwufhwieufhwiehfeiwuhewiuhfwufweufywuefygiuwgyefuwgyu', 20, 390)
+  stroke(0);
+  ellipse(47.5, sunY, 50, 55);
+  fill(255,140,0)
+  ellipse(55, sunY, 50, 55);
+  noStroke();
+  fill(255,215,0)
+  ellipse(50, sunY, 50, 55);
 
+  if(sunY>=0&&sunY<=70){
+    sunY+=20;
+  }
+
+  fill(19,69,0)
+  ellipse(600, eliY+890, 2000, 1000);
+  fill(49,99,0)
+  rect(0, eliY+585, 800, 20)
+  fill('white');
+  if(eliY>0){
+    eliY -= 1.5;
+  }
+
+  //planes
+  fill('blue');
+  rect(150, 150, 50, 50)
 }
 
 function rules() {
@@ -109,15 +109,9 @@ function rules() {
   text('Welcome to fight club', 100, 100);
   text('The first rule of fight club is:\n you do not talk about fight club', 50, 200);
   text('Second rule is: \nyou do not talk about fight club', 50, 300);
-  //to leave rules
-  if (keyCode == ESCAPE) {
-    y = 75;
-    telaAtiva = 0;
-    draw();
-  }
 }
 
-function quit() { }
+//function quit() { }
 
 function keyPressed() {
   //if enter is pressed, then main screen shows up
@@ -132,15 +126,31 @@ function keyPressed() {
     if (y > 75)
       y -= 100;
   }
+  if(keyCode == ESCAPE && telaAtiva == 1){
+      y = 75;
+      telaAtiva=0;
+      back=0;
+      moonY=65;
+      draw();
+  }
+  if (keyCode == ESCAPE && telaAtiva == 2) {
+    y = 75;
+    telaAtiva = 0;
+    draw();
+  }
 }
 
 //functions for future plans(i.e. stars and makeCloud)
 function stars() {
-  starX = random(0, width)
-  starY = random(0, height)
+  var howMany=[];
   stroke(255)
   fill('white')
-  point(starX, starY)
+  for(i=0; i<100;i++){
+    starX = random(0, width)
+    starY = random(0, height)
+    howMany[i]=point(starX, starY)
+  }
+  noStroke();
   noFill();
 }
 function makeCloud(cloudx, cloudy) {
@@ -150,3 +160,4 @@ function makeCloud(cloudx, cloudy) {
   ellipse(cloudx + 10, cloudy + 10, 70, 50);
   ellipse(cloudx - 20, cloudy + 10, 70, 50);
 }
+function chuva(){}
