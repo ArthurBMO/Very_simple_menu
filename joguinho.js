@@ -1,6 +1,7 @@
 
 var x = 120;
 var y = 75;
+var xChoice = 240;
 var choice = 1;
 var telaAtiva;
 var starX;
@@ -9,7 +10,7 @@ var star = [];
 var eliX = 0, eliY = 210;
 var cloudx = 100, cloudy = 100;
 var moonY=65, back=0, sunY=0;
-var moon;
+var perg = 1, resp=0;
 
 function preload() {
   //moon = loadImage('moon.png');
@@ -98,8 +99,33 @@ function play() {
   }
 
   //planes
-  fill('blue');
-  rect(150, 150, 50, 50)
+  fill('white');
+  rect(200, 150, 50, 50)
+  fill('black');
+  text('plane', 200, 170);
+
+  fill('white');
+  rect(300, 150, 50, 50)
+  fill('black');
+  text('plane', 300, 170);
+
+  fill('white');
+  rect(400, 150, 50, 50)
+  fill('black');
+  text('plane', 400, 170);
+
+  //player
+  rect(150, 560, 10, 40);
+  rect(180, 560, 10, 40);
+
+  //questions
+  fill('orange');
+  rect(200, 300, 400, 200);
+  fill('black');
+  textSize(32);
+  text('Resolva a equação', 250, 330);
+
+  quiz();
 }
 
 function rules() {
@@ -111,12 +137,61 @@ function rules() {
   text('Second rule is: \nyou do not talk about fight club', 50, 300);
 }
 
-//function quit() { }
+function quiz() {
+
+    switch(perg){
+        case 1:
+            text('10 x __ = 250', 296, 385);
+            textSize(20);
+            text('Quanto multiplicado por 10, dá 250?', 222, 420);
+            textSize(32);
+            text('25', 240, 470);
+            text('50', 320, 470);
+            text('250', 400, 470);
+            text('2,5', 500, 470);
+            if(xChoice==240){
+                resp=1;
+                fill('white');
+                text('Δ 25', 208, 470);
+            }
+            if(xChoice==320){
+                resp=2;
+                fill('white');
+                text('Δ 50', 288, 470);
+            }
+            if(xChoice==400){
+                resp=3
+                fill('white');
+                text('Δ 250', 368, 470);
+            }
+            if(xChoice==480){
+                resp=4
+                fill('white');
+                text('Δ 2,5', 468, 470);
+            }
+            switch (respAtiva) {
+              case 1:
+                fill('orange');
+                rect(200, 300, 400, 200);
+                fill('black');
+                textSize(32);
+                text('Correta resposta, pressione enter', 222, 400);
+                break;
+              default:
+
+            }
+            break;
+        case 2:
+            text('20 ÷ __ = 10', width/3.5, 400);
+            break;
+    }
+}
 
 function keyPressed() {
   //if enter is pressed, then main screen shows up
   if (keyCode == ENTER) {
     telaAtiva = choice;
+    respAtiva=resp;
   }
   //selecting options
   if (keyCode === DOWN_ARROW) {
@@ -125,6 +200,13 @@ function keyPressed() {
   } else if (keyCode === UP_ARROW) {
     if (y > 75)
       y -= 100;
+  }
+  if (keyCode === RIGHT_ARROW){
+    if(xChoice<480)
+      xChoice += 80;
+  }else if (keyCode == LEFT_ARROW){
+    if(xChoice>240)
+      xChoice -= 80;
   }
   if(keyCode == ESCAPE && telaAtiva == 1){
       y = 75;
