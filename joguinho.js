@@ -10,10 +10,11 @@ var star = [];
 var eliX = 0, eliY = 210;
 var cloudx = 100, cloudy = 100;
 var moonY=65, back=0, sunY=0;
-var perg = 1, resp=0;
+var perg = 2, resp=0;
+//let milliseconds = millis();
 
 function preload() {
-  //moon = loadImage('moon.png');
+  //moon = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/star.jpg');
 }
 
 function setup() {
@@ -22,13 +23,14 @@ function setup() {
 
 function draw() {
 
-  background(0);
+  background(5,5,5);
 
   //this is the moon
   //ellipse(50, 70, 50, 50);
   //this is the fast thinking name
   fill('#d0efff');
   textSize(50);
+  //text('Milliseconds \nrunning: \n' + milliseconds, 300, 200);
   text('Fast Thinking', 228.5, 90);
   //for the main text
   textSize(25);
@@ -124,7 +126,21 @@ function play() {
   fill('black');
   textSize(32);
   text('Resolva a equação', 250, 330);
-
+  switch (respAtiva) {
+    case 1:
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(32);
+      text('Correta resposta, pressione enter', 222, 400);
+      break;
+    case 2:
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(32);
+      text('Errado, tome dano', 222, 400);
+  }
   quiz();
 }
 
@@ -169,20 +185,36 @@ function quiz() {
                 fill('white');
                 text('Δ 2,5', 468, 470);
             }
-            switch (respAtiva) {
-              case 1:
-                fill('orange');
-                rect(200, 300, 400, 200);
-                fill('black');
-                textSize(32);
-                text('Correta resposta, pressione enter', 222, 400);
-                break;
-              default:
-
-            }
             break;
         case 2:
-            text('20 ÷ __ = 10', width/3.5, 400);
+            text('4 x 7 = ___', 296, 385);
+            textSize(20);
+            text('Quatro multiplicado por sete, dá?', 222, 420);
+            textSize(32);
+            text('27', 240, 470);
+            text('28', 320, 470);
+            text('250', 400, 470);
+            text('25', 500, 470);
+            if(xChoice==240){
+                resp=1;
+                fill('white');
+                text('Δ 27', 208, 470);
+            }
+            if(xChoice==320){
+                resp=2;
+                fill('white');
+                text('Δ 28', 288, 470);
+            }
+            if(xChoice==400){
+                resp=3
+                fill('white');
+                text('Δ 250', 368, 470);
+            }
+            if(xChoice==480){
+                resp=4
+                fill('white');
+                text('Δ 25', 468, 470);
+            }
             break;
     }
 }
@@ -223,23 +255,4 @@ function keyPressed() {
 }
 
 //functions for future plans(i.e. stars and makeCloud)
-function stars() {
-  var howMany=[];
-  stroke(255)
-  fill('white')
-  for(i=0; i<100;i++){
-    starX = random(0, width)
-    starY = random(0, height)
-    howMany[i]=point(starX, starY)
-  }
-  noStroke();
-  noFill();
-}
-function makeCloud(cloudx, cloudy) {
-  fill(255)
-  noStroke();
-  ellipse(cloudx, cloudy, 70, 50);
-  ellipse(cloudx + 10, cloudy + 10, 70, 50);
-  ellipse(cloudx - 20, cloudy + 10, 70, 50);
-}
 function chuva(){}
