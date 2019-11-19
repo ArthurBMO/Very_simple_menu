@@ -1,9 +1,4 @@
-/*
-Equipe:
-  Arthur Beserra de Oliveira - 2A(Líder)
-  Suellen Medeiros Rodrigues - 2A
-  Etapa 4 e 5
-*/
+
 let derp, medium, hard, impossible;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
@@ -19,7 +14,7 @@ var countershotY = 200, countershotY2 = 200, countershotY3 = 200;
 //ship é a posição dos avião, pra eles poder sumir quando a bala chegar
 var ship1 = 150, ship2 = 150, ship3 = 150;
 //se vida = 0, GAME OVER BITHC
-var vida = 3, tempo = 0;
+var vida = 3, tempo = 0, gameOver=false, gameMode;
 /*isso tudo é pra intro(), derp também
 var qual=1, idiota=0, falas=
   [
@@ -49,7 +44,7 @@ function draw() {
   text('ENTER para jogar\nESC para regras', 240, 400);
   //ENTER PRA INICIR O JOGO
   if (keyCode == ENTER && telaAtiva == 0) {
-    telaAtiva = 1;
+    telaAtiva = 2;
   }
   //AQUI JAZ ESC PRA ENTRAR NAS REGRA
   //if(keyCode == ESCAPE)
@@ -87,6 +82,7 @@ function difficult() {
     rect(100, 350, 110, 100);
     noStroke();
     if (mouseIsPressed) {
+      gameMode = 'easy';
       telaAtiva = 2;
       strokeWeight(1);
     }
@@ -98,6 +94,7 @@ function difficult() {
     rect(320, 350, 110, 100);
     noStroke();
     if (mouseIsPressed) {
+      gameMode = 'medium';
       telaAtiva = 2;
       strokeWeight(1);
     }
@@ -109,6 +106,7 @@ function difficult() {
     rect(550, 350, 110, 100);
     noStroke();
     if (mouseIsPressed) {
+      gameMode = 'hard';
       telaAtiva = 2;
       strokeWeight(1);
     }
@@ -293,8 +291,6 @@ function quiz() {
         perg = 4;
       }
       break;
-    default:
-      break;
   }
   //só pra testar mesmo
   if (perg == 4 && vida > 0) {
@@ -302,179 +298,192 @@ function quiz() {
     rect(200, 300, 400, 200);
     fill('black');
     textSize(32);
-    text('Félicitations, vous avez gagné!', 250, 330);
+    text('Félicitations, vous avez gagné!\n ESC para sair', 250, 330);
+    gameOver = true;
+  }
+  else if(perg == 4 && vida == 0){
+    fill('orange');
+    rect(200, 300, 400, 200);
+    fill('black');
+    textSize(32);
+    text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+    gameOver = true;
   }
   perguntas();
 }
 
 function perguntas() {
-  switch (perg) {
-    case 1:
-      //fundo das perguntas
-      fill('orange');
-      rect(200, 300, 400, 200);
-      fill('black');
-      textSize(32);
-      text('Resolva a equação', 250, 330);
-      //perguntas
-      text('10 x __ = 250', 296, 385);
-      textSize(20);
-      text('Quanto multiplicado por 10, dá 250?', 222, 420);
-      textSize(32);
-      //opções
-      text('25--', 240, 470);
-      text('50', 320, 470);
-      text('250', 400, 470);
-      text('2,5', 500, 470);
-      if (mouseX >= 208 && mouseX <= 300 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
-        fill('white');
-        text('Δ 25', 208, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
-        if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
-          ponto++;
-          perg = 0;
+  if(gameMode == 'easy'){
+    switch (perg) {
+      case 1:
+        //fundo das perguntas
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(32);
+        text('Resolva a equação', 250, 330);
+        //perguntas
+        text('10 x __ = 250', 296, 385);
+        textSize(20);
+        text('Quanto multiplicado por 10, dá 250?', 222, 420);
+        textSize(32);
+        //opções
+        text('25--', 240, 470);
+        text('50', 320, 470);
+        text('250', 400, 470);
+        text('2,5', 500, 470);
+        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+          resp = 1;
+          fill('white');
+          text('Δ 25', 208, 470);
+          //90 e 122 é igual a z e Z, porque se for enter da bug
+          if (mouseIsPressed) {
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            ponto++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 288 && mouseX <= 380 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
-        fill('white');
-        text('Δ 50', 288, 470);
-        //é pra perder vida msa ta bugando
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+          resp = 2;
+          fill('white');
+          text('Δ 50', 288, 470);
+          //é pra perder vida msa ta bugando
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
-        fill('white');
-        text('Δ 250', 368, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+          resp = 3
+          fill('white');
+          text('Δ 250', 368, 470);
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 468 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
-        fill('white');
-        text('Δ 2,5', 468, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+          resp = 4
+          fill('white');
+          text('Δ 2,5', 468, 470);
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      break;
-    case 2:
-      fill('orange');
-      rect(200, 300, 400, 200);
-      fill('black');
-      textSize(32);
-      text('Resolva a equação', 250, 330);
-      text('10 x __ = 250', 296, 385);
-      textSize(20);
-      text('Quanto multiplicado por 10, dá 250?', 222, 420);
-      textSize(32);
-      text('25==', 240, 470);
-      text('50', 320, 470);
-      text('250', 400, 470);
-      text('2,5', 500, 470);
-      if (mouseX >= 208 && mouseX <= 300 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
-        fill('white');
-        text('Δ 25', 208, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
-        if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
-          ponto++;
-          perg = 0;
+        break;
+      case 2:
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(32);
+        text('Resolva a equação', 250, 330);
+        text('6 x 6 = __', 296, 385);
+        textSize(20);
+        text('Quanto multiplicado por 10, dá 250?', 222, 420);
+        textSize(32);
+        text('50', 240, 470);
+        text('36', 320, 470);
+        text('35', 400, 470);
+        text('12', 500, 470);
+         if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+          resp = 1;
+          fill('white');
+          text('Δ 50', 208, 470);
+          //90 e 122 é igual a z e Z, porque se for enter da bug
+          if (mouseIsPressed) {
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 288 && mouseX <= 380 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
-        fill('white');
-        text('Δ 50', 288, 470);
-        //é pra perder vida msa ta bugando
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+          resp = 2;
+          fill('white');
+          text('Δ 36', 288, 470);
+          //é pra perder vida msa ta bugando
+          if (mouseIsPressed) {
+            ponto++
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
-        fill('white');
-        text('Δ 250', 368, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+          resp = 3
+          fill('white');
+          text('Δ 35', 368, 470);
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 468 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
-        fill('white');
-        text('Δ 2,5', 468, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+          resp = 4
+          fill('white');
+          text('Δ 12', 468, 470);
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      break;
-    case 3:
-      fill('orange');
-      rect(200, 300, 400, 200);
-      fill('black');
-      textSize(32);
-      text('Resolva a equação', 250, 330);
-      text('10 x __ = 250', 296, 385);
-      textSize(20);
-      text('Quanto multiplicado por 10, dá 250?', 222, 420);
-      textSize(32);
-      text('25', 240, 470);
-      text('50', 320, 470);
-      text('250--', 400, 470);
-      text('2,5', 500, 470);
-      if (mouseX >= 208 && mouseX <= 300 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
-        fill('white');
-        text('Δ 25', 208, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
-        if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
-          ponto++;
-          perg = 0;
+        break;
+      case 3:
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(32);
+        text('Resolva a equação', 250, 330);
+        text('6 x 4 = __', 296, 385);
+        textSize(20);
+        text('Quanto multiplicado por 10, dá 250?', 222, 420);
+        textSize(32);
+        text('25', 240, 470);
+        text('36', 320, 470);
+        text('28', 400, 470);
+        text('24', 500, 470);
+         if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+          resp = 1;
+          fill('white');
+          text('Δ 25', 208, 470);
+          //90 e 122 é igual a z e Z, porque se for enter da bug
+          if (mouseIsPressed) {
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 288 && mouseX <= 380 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
-        fill('white');
-        text('Δ 50', 288, 470);
-        //é pra perder vida msa ta bugando
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+          resp = 2;
+          fill('white');
+          text('Δ 36', 288, 470);
+          //é pra perder vida msa ta bugando
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
-        fill('white');
-        text('Δ 250', 368, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+          resp = 3
+          fill('white');
+          text('Δ 28', 368, 470);
+          if (mouseIsPressed) {
+            inimigo++;
+            perg = 0;
+          }
         }
-      }
-      if (mouseX >= 468 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
-        fill('white');
-        text('Δ 2,5', 468, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          perg = 0;
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+          resp = 4
+          fill('white');
+          text('Δ 24', 468, 470);
+          if (mouseIsPressed) {
+            ponto++;
+            perg = 0;
+          }
         }
-      }
-      break;
+        break;
+    }
   }
+  else if(gameMode == 'medium'){}
+  else if(gameMode == 'hard'){}
 }
 
 function keyPressed() {
@@ -485,7 +494,7 @@ function keyPressed() {
       qual=0;
       tempo=0;
   }*/
-  if (keyCode == ESCAPE && telaAtiva == 2) {
+  if (keyCode == ESCAPE && telaAtiva == 2 && gameOver == true) {
     telaAtiva = 0;
     moonY = 65, back = 0, sunY = 0;
     perg = 1, resp = 0;
