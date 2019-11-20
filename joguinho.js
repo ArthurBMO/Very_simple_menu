@@ -137,6 +137,7 @@ function difficult() {
 }
 
 function intro() {
+  background(0);
   fill('white')
   rect(0, 500, 800, 300);
   image(derp, 700, 400, 100, 110);
