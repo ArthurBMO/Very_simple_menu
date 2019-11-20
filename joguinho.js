@@ -32,7 +32,7 @@ function preload() {
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
   moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
   hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
-  fonte = loadFont('https://github.com/ArthurBMO/Very_simple_menu/blob/master/Apple2.ttf')
+  fonte = loadFont('Apple2.ttf')
 }
 
 function setup() {
