@@ -1,5 +1,5 @@
 
-let moonImage, derp, medium, hard, impossible, hardBackground;
+let moonImage, derp, medium, hard, impossible, hardBackground, fonte;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
 //serve pras montanhas subirem
@@ -9,6 +9,7 @@ var eliX = 0, eliY = 210;
 var moonY = 65, back = 0, sunY = 0;
 //variaveis para cara dificuldade
 var perg = 1, resp = 0, pergH = 1, respH = 0, pergIm = 1, respIm = 0;
+var xM, yM, xM2, yM2, xM3, yM3, xH, yH, xIm, yIm;
 //gunshotY é a posição das balas, se for igual buga
 var gunshotY = 560, gunshotY2 = 560, gunshotY3 = 560, ponto = 0, inimigo = 0;
 var countershotY = 200, countershotY2 = 200, countershotY3 = 200;
@@ -31,15 +32,23 @@ function preload() {
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
   moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
   hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
+  fonte = loadFont('https://github.com/ArthurBMO/Very_simple_menu/blob/master/Apple2.ttf')
 }
 
 function setup() {
   createCanvas(800, 600);
+  xM=Math.floor(random(2,5));
+  yM=Math.floor(random(2,5));
+  xM2=Math.floor(random(2,5));
+  yM2=Math.floor(random(2,5));
+  xM3=Math.floor(random(2,5));
+  yM3=Math.floor(random(2,5));
 }
 
 function draw() {
   background(5, 5, 5);
   //É o nome
+  textFont(fonte)
   fill('#d0efff');
   textSize(50);
   text('Fast Thinking', 228.5, 90);
@@ -343,6 +352,7 @@ function mediumF() {
   //the actual questions
   switch (perg) {
     case 1:
+      console.log(xM+" "+yM);
       //fundo das perguntas
       fill('orange');
       rect(200, 300, 400, 200);
@@ -350,19 +360,19 @@ function mediumF() {
       textSize(32);
       text('Resolva a equação', 250, 330);
       //perguntas
-      text('10 x __ = 250', 296, 385);
+      text(xM+' x __ = '+xM*yM, 296, 385);
       textSize(20);
-      text('Quanto multiplicado por 10, dá 250?', 222, 420);
+      text('Quanto multiplicado por '+xM+', dá '+xM*yM+'?', 222, 420);
       textSize(32);
       //opções
-      text('25--', 240, 470);
-      text('50', 320, 470);
-      text('250', 400, 470);
-      text('2,5', 500, 470);
+      text(yM, 240, 470);
+      text(yM*5, 320, 470);
+      text(yM*Math.round(random(2,3)), 400, 470);
+      text(yM+3, 500, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         resp = 1;
         fill('white');
-        text('Δ 25', 208, 470);
+        text('Δ '+yM, 208, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
@@ -373,7 +383,7 @@ function mediumF() {
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         resp = 2;
         fill('white');
-        text('Δ 50', 288, 470);
+        text('Δ '+yM*5, 288, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           inimigo++;
@@ -383,7 +393,7 @@ function mediumF() {
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
         resp = 3
         fill('white');
-        text('Δ 250', 368, 470);
+        text('Δ '+yM*Math.round(random(2,3)), 368, 470);
         if (mouseIsPressed) {
           inimigo++;
           perg = 0;
@@ -392,7 +402,7 @@ function mediumF() {
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
         resp = 4
         fill('white');
-        text('Δ 2,5', 468, 470);
+        text('Δ '+(yM+3), 468, 470);
         if (mouseIsPressed) {
           inimigo++;
           perg = 0;
@@ -405,18 +415,18 @@ function mediumF() {
       fill('black');
       textSize(32);
       text('Resolva a equação', 250, 330);
-      text('6 x 6 = __', 296, 385);
+      text(xM2+' x '+yM2+' = __', 296, 385);
       textSize(20);
-      text('Quanto multiplicado por 10, dá 250?', 222, 420);
+      text(xM2+' multiplicado por '+yM2+', dá ?', 222, 420);
       textSize(32);
-      text('50', 240, 470);
-      text('36', 320, 470);
-      text('35', 400, 470);
-      text('12', 500, 470);
+      text(xM2*yM2*xM2, 240, 470);
+      text(yM2*xM2, 320, 470);
+      text(xM2+4, 400, 470);
+      text(yM2+2, 500, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         resp = 1;
         fill('white');
-        text('Δ 50', 208, 470);
+        text('Δ '+xM2*yM2*xM2, 208, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
@@ -427,7 +437,7 @@ function mediumF() {
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         resp = 2;
         fill('white');
-        text('Δ 36', 288, 470);
+        text('Δ '+yM2*xM2, 288, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           ponto++
@@ -437,7 +447,7 @@ function mediumF() {
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
         resp = 3
         fill('white');
-        text('Δ 35', 368, 470);
+        text('Δ '+(xM2+4), 368, 470);
         if (mouseIsPressed) {
           inimigo++;
           perg = 0;
@@ -446,7 +456,7 @@ function mediumF() {
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
         resp = 4
         fill('white');
-        text('Δ 12', 468, 470);
+        text('Δ '+(yM2+2), 468, 470);
         if (mouseIsPressed) {
           inimigo++;
           perg = 0;
@@ -459,18 +469,18 @@ function mediumF() {
       fill('black');
       textSize(32);
       text('Resolva a equação', 250, 330);
-      text('6 x 4 = __', 296, 385);
+      text(xM3+' x '+yM3+' = __', 296, 385);
       textSize(20);
-      text('Quanto multiplicado por 10, dá 250?', 222, 420);
+      text(xM3+' multiplicado por '+yM3+', dá ?', 222, 420);
       textSize(32);
-      text('25', 240, 470);
-      text('36', 320, 470);
-      text('28', 400, 470);
-      text('24', 500, 470);
+      text(yM3, 240, 470);
+      text(xM3+8, 320, 470);
+      text(xM3-2, 400, 470);
+      text(xM3*yM3, 500, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         resp = 1;
         fill('white');
-        text('Δ 25', 208, 470);
+        text('Δ '+yM3, 208, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
@@ -481,7 +491,7 @@ function mediumF() {
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         resp = 2;
         fill('white');
-        text('Δ 36', 288, 470);
+        text('Δ '+(xM3+8), 288, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           inimigo++;
@@ -491,7 +501,7 @@ function mediumF() {
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
         resp = 3
         fill('white');
-        text('Δ 28', 368, 470);
+        text('Δ '+(xM3-2), 368, 470);
         if (mouseIsPressed) {
           inimigo++;
           perg = 0;
@@ -500,7 +510,7 @@ function mediumF() {
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
         resp = 4
         fill('white');
-        text('Δ 24', 468, 470);
+        text('Δ '+xM3*yM3, 468, 470);
         if (mouseIsPressed) {
           ponto++;
           perg = 0;
