@@ -48,7 +48,7 @@ function setup() {
 function draw() {
   background(5, 5, 5);
   //É o nome
-  textFont(fonte)
+  textFont(fonte, 32)
   fill('#d0efff');
   textSize(50);
   text('Fast Thinking', 228.5, 90);
