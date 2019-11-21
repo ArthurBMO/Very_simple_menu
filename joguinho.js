@@ -55,7 +55,7 @@ function setup() {
 }
 
 function draw() {
-  background(5, 5, 5);
+  background('#222');
   //É o nome
   textFont(fonte)
   fill('#d0efff');
@@ -105,7 +105,7 @@ function draw() {
 }
 
 function difficult() {
-  background(0);
+  background('#222');
   text('[selecionar: mouse]', 20, 590);
   textSize(15);
   fill('white');
@@ -155,7 +155,7 @@ function difficult() {
 }
 
 function intro() {
-  background(0);
+  background('#222');
   fill('white')
   rect(0, 500, 800, 300);
   image(derp, 700, 400, 100, 110);
