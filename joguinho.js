@@ -10,15 +10,14 @@ var moonY = 65, back = 0, sunY = 0;
 //variaveis para cara dificuldade
 var perg = 1, resp = 0, pergH = 1, respH = 0, pergIm = 1, respIm = 0;
 var numeros = [18];
-//gunshotY é a posição das balas, se for igual buga
-var gun = [560, 560, 560];
+//first 3 are first level, the 4 after is hard the 3 after are impossible
+var gun = [560, 560, 560, 560, 560, 560, 560];
 //still left to add gunCounter
-var gunCounter = [];
+var gunCounter = [200, 200, 200];
 var ponto = 0, inimigo = 0;
 var countershotY = 200, countershotY2 = 200, countershotY3 = 200;
 //ship é a posição dos avião, pra eles poder sumir quando a bala chegar
 //add ships
-var ship=[];
 var ship1 = 150, ship2 = 150, ship3 = 150, ship4 = 150;
 //se vida = 0, GAME OVER BITHC
 var vida = 3, tempo = 0, gameMode;
@@ -252,36 +251,36 @@ function points() {
     switch (inimigo) {
       case 1:
         fill('black');
-        rect(200, countershotY, 10, 40);
-        if (countershotY <= 560) {
-          countershotY += 5;
+        rect(200, gunCounter[0], 10, 40);
+        if (gunCounter[0] <= 560) {
+          gunCounter[0] += 5;
         }
-        if (countershotY == 560) {
-          countershotY = 900;
+        if (gunCounter[0] == 560) {
+          gunCounter[0] = 900;
           vida = vida - 1;
           perg = 2;
         }
         break;
       case 2:
         fill('black');
-        rect(300, countershotY2, 10, 40);
-        if (countershotY2 <= 560) {
-          countershotY2 += 5;
+        rect(300, gunCounter[1], 10, 40);
+        if (gunCounter[1] <= 560) {
+          gunCounter[1] += 5;
         }
-        if (countershotY2 == 560) {
-          countershotY2 = 900;
+        if (gunCounter[1] == 560) {
+          gunCounter[1] = 900;
           vida = vida - 1;
           perg = 3;
         }
         break;
       case 3:
         fill('black');
-        rect(400, countershotY3, 10, 40);
-        if (countershotY3 <= 560) {
-          countershotY3 += 5;
+        rect(400, gunCounter[2], 10, 40);
+        if (gunCounter[2] <= 560) {
+          gunCounter[2] += 5;
         }
-        if (countershotY3 == 560) {
-          countershotY3 = 900;
+        if (gunCounter[2] == 560) {
+          gunCounter[2] = 900;
           vida = vida - 1;
           perg = 4;
         }
@@ -301,6 +300,93 @@ function points() {
       fill('black');
       textSize(12);
       text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+    }
+  }
+  else if(gameMode == 'hard'){
+    switch (pontoH) {
+      case 1:
+        pergH = 2;
+      case 2:
+        fill('black');
+        rect(200, gun[3], 10, 40);
+        //pra bala subir
+        if (gun[3] >= 200) {
+          gun[3] -= 5;
+        }
+        //pra ela colidir com o aviao e puxar a proxima pergunta
+        if (gun[3] == 200) {
+          ship1 = -100;
+          gun[3] = -100;
+          pergH = 3;
+        }
+        break;
+      case 3:
+        pergH = 4;
+      case 4:
+        fill('black');
+        rect(300, gun[4], 10, 40);
+        if (gun[4] >= 200) {
+          gun[4] -= 5;
+        }
+        if (gun[4] == 200) {
+          ship2 = -10;
+          gun[4] = -10;
+          pergH = 3;
+        }
+        break;
+      case 5:
+        pergH = 6;
+      case 6:
+        fill('black');
+        rect(400, gun[5], 10, 40);
+        if (gun[5] >= 200) {
+          gun[5] -= 5;
+        }
+        if (gun[5] == 200) {
+          ship3 = -10;
+          gun[5] = -10;
+          pergH = 7;
+        }
+        break;
+    }
+
+    switch (inimigo) {
+      case 1:
+        fill('black');
+        rect(200, gunCounter[3], 10, 40);
+        if (gunCounter[3] <= 560) {
+          gunCounter[3] += 5;
+        }
+        if (gunCounter[3] == 560) {
+          gunCounter[3] = 900;
+          vida = vida - 1;
+          pergH = 2;
+        }
+        break;
+      case 2:
+        fill('black');
+        rect(300, gunCounter[4], 10, 40);
+        if (gunCounter[4] <= 560) {
+          gunCounter[4] += 5;
+        }
+        if (gunCounter[4] == 560) {
+          gunCounter[4] = 900;
+          vida = vida - 1;
+          pergH = 3;
+        }
+        break;
+      case 3:
+        fill('black');
+        rect(400, gunCounter[5], 10, 40);
+        if (gunCounter[5] <= 560) {
+          gunCounter[5] += 5;
+        }
+        if (gunCounter[5] == 560) {
+          gunCounter[5] = 900;
+          vida = vida - 1;
+          pergH = 4;
+        }
+        break;
     }
   }
 }
@@ -571,6 +657,8 @@ function hardF() {
   fill('black');
   text('plane', 400, 170);
 
+  quiz();
+
   switch (pergH) {
     case 1:
       //fundo das perguntas
@@ -604,7 +692,7 @@ function hardF() {
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           ponto++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
@@ -613,7 +701,7 @@ function hardF() {
         text((numeros[7] + 1), 420, 470);
         if (mouseIsPressed) {
           inimigo++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
@@ -622,7 +710,7 @@ function hardF() {
         text((numeros[7] + numeros[6]), 500, 470);
         if (mouseIsPressed) {
           inimigo++;
-          perg = 0;
+          pergH = 0;
         }
       }
       break;
@@ -646,7 +734,7 @@ function hardF() {
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
           inimigo++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
@@ -656,7 +744,7 @@ function hardF() {
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           inimigo++
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
@@ -665,7 +753,7 @@ function hardF() {
         text('Δ 400', 368, 470);
         if (mouseIsPressed) {
           ponto++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
@@ -674,7 +762,7 @@ function hardF() {
         text('Δ 240', 468, 470);
         if (mouseIsPressed) {
           inimigo++;
-          perg = 0;
+          pergH = 0;
         }
       }
       break;
@@ -698,7 +786,7 @@ function hardF() {
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
           ponto++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
@@ -708,7 +796,7 @@ function hardF() {
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           inimigo++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
@@ -717,7 +805,7 @@ function hardF() {
         text('Δ 49', 368, 470);
         if (mouseIsPressed) {
           inimigo++;
-          perg = 0;
+          pergH = 0;
         }
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
@@ -726,7 +814,7 @@ function hardF() {
         text('Δ 40', 468, 470);
         if (mouseIsPressed) {
           ponto++;
-          perg = 0;
+          pergH = 0;
         }
       }
       break;
@@ -734,7 +822,7 @@ function hardF() {
 }
 
 function impossibleF() {
-  quiz();
+  //quiz();
 }
 function quiz() {
   //aqui a cada ponto, a bala aparece pra explodir um aviao
