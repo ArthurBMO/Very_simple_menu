@@ -751,7 +751,8 @@ function hardF() {
   points();
 
   tempo++;
-
+  text(tempo, 550, 50);
+  
   if (tempo < 601) {
     switch (pergH) {
       case 1:
