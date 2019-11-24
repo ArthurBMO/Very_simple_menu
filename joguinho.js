@@ -35,7 +35,7 @@ function preload() {
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
   moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
   hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
-  //fonte = loadFont('Apple2.ttf');
+  fonte = loadFont('Apple2.ttf');
 }
 
 function setup() {
@@ -58,7 +58,7 @@ function setup() {
 function draw() {
   background('#222');
   //É o nome
-  //textFont(fonte)
+  textFont(fonte)
   fill('#d0efff');
   textSize(30);
   text('Fast Thinking', 225, 90);
