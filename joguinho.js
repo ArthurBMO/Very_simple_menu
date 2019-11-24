@@ -11,14 +11,13 @@ var moonY = 65, back = 0, sunY = 0;
 var perg = 1, resp = 0, pergH = 1, respH = 0, pergIm = 1, respIm = 0;
 var numeros = [18];
 //first 3 are first level, the 4 after is hard the 3 after are impossible
-var gun = [560, 560, 560, 560, 560, 560, 560];
+var gun = [560, 560, 560, 560, 560, 560, 560, 560, 560];
 //still left to add gunCounter
-var gunCounter = [200, 200, 200];
-var ponto = 0, inimigo = 0;
-var countershotY = 200, countershotY2 = 200, countershotY3 = 200;
+var gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200];
+var ponto = 0, pontoH = 0, pontoIm = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0;
 //ship é a posição dos avião, pra eles poder sumir quando a bala chegar
 //add ships
-var ship1 = 150, ship2 = 150, ship3 = 150, ship4 = 150;
+var ship1 = 150, ship2 = 150, ship3 = 150;
 //se vida = 0, GAME OVER BITHC
 var vida = 3, tempo = 0, gameMode;
 
@@ -41,6 +40,8 @@ function preload() {
 
 function setup() {
   createCanvas(800, 600);
+  var tempo = Date.now();
+  randomSeed(tempo);
   for (i = 0; i < 18; i++) {
     if (i < 6) {
       numeros[i] = Math.floor(random(2, 10));
@@ -122,8 +123,9 @@ function difficult() {
     strokeWeight(10);
     rect(100, 350, 110, 100);
     noStroke();
-    if (mouseIsPressed) {
+    if (mouseIsPressed && telaAtiva == 1) {
       gameMode = 'medium';
+      vida = 3;
       telaAtiva = 2;
       strokeWeight(1);
     }
@@ -134,8 +136,9 @@ function difficult() {
     strokeWeight(10);
     rect(320, 350, 110, 100);
     noStroke();
-    if (mouseIsPressed) {
+    if (mouseIsPressed && telaAtiva == 1) {
       gameMode = 'hard';
+      vida = 3;
       telaAtiva = 3;
       strokeWeight(1);
     }
@@ -146,8 +149,9 @@ function difficult() {
     strokeWeight(10);
     rect(550, 350, 110, 100);
     noStroke();
-    if (mouseIsPressed) {
+    if (mouseIsPressed && telaAtiva == 1) {
       gameMode = 'impossible';
+      vida = 3;
       telaAtiva = 4;
       strokeWeight(1);
     }
@@ -194,7 +198,7 @@ function intro() {
       if (ship1 <= 170)
         ship1 += 3;
       tempo++
-      if (mouseIsPressed && tempo > 120) {
+      if (mouseIsPressed && tempo > 120 && telaAtiva == 5) {
         qual = 0;
         tempo = 0;
         ship1 = 150;
@@ -302,11 +306,9 @@ function points() {
       text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
     }
   }
-  else if(gameMode == 'hard'){
+  else if (gameMode == 'hard') {
     switch (pontoH) {
       case 1:
-        pergH = 2;
-      case 2:
         fill('black');
         rect(200, gun[3], 10, 40);
         //pra bala subir
@@ -317,12 +319,10 @@ function points() {
         if (gun[3] == 200) {
           ship1 = -100;
           gun[3] = -100;
-          pergH = 3;
+          pergH = 2;
         }
         break;
-      case 3:
-        pergH = 4;
-      case 4:
+      case 2:
         fill('black');
         rect(300, gun[4], 10, 40);
         if (gun[4] >= 200) {
@@ -334,9 +334,7 @@ function points() {
           pergH = 3;
         }
         break;
-      case 5:
-        pergH = 6;
-      case 6:
+      case 3:
         fill('black');
         rect(400, gun[5], 10, 40);
         if (gun[5] >= 200) {
@@ -345,12 +343,12 @@ function points() {
         if (gun[5] == 200) {
           ship3 = -10;
           gun[5] = -10;
-          pergH = 7;
+          pergH = 4;
         }
         break;
     }
 
-    switch (inimigo) {
+    switch (inimigoH) {
       case 1:
         fill('black');
         rect(200, gunCounter[3], 10, 40);
@@ -383,10 +381,120 @@ function points() {
         }
         if (gunCounter[5] == 560) {
           gunCounter[5] = 900;
+
           vida = vida - 1;
           pergH = 4;
         }
         break;
+    }
+    if (pergH == 4 && vida > 0) {
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(12);
+      text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
+    }
+    else if (pergH == 4 && vida == 0) {
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(12);
+      text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+    }
+  }
+  if (gameMode == 'impossible') {
+    switch (pontoIm) {
+      case 1:
+        fill('black');
+        rect(200, gun[6], 10, 40);
+        //pra bala subir
+        if (gun[6] >= 200) {
+          gun[6] -= 5;
+        }
+        //pra ela colidir com o aviao e puxar a proxima pergunta
+        if (gun[6] == 200) {
+          ship1 = -100;
+          gun[6] = -100;
+          pergIm = 2;
+        }
+        break;
+      case 2:
+        fill('black');
+        rect(300, gun[7], 10, 40);
+        if (gun[7] >= 200) {
+          gun[7] -= 5;
+        }
+        if (gun[7] == 200) {
+          ship2 = -10;
+          gun[7] = -10;
+          pergIm = 3;
+        }
+        break;
+      case 3:
+        fill('black');
+        rect(400, gun[8], 10, 40);
+        if (gun[8] >= 200) {
+          gun[8] -= 5;
+        }
+        if (gun[8] == 200) {
+          ship3 = -10;
+          gun[8] = -10;
+          pergIm = 4;
+        }
+        break;
+    }
+
+    switch (inimigoIm) {
+      case 1:
+        fill('black');
+        rect(200, gunCounter[6], 10, 40);
+        if (gunCounter[6] <= 560) {
+          gunCounter[6] += 5;
+        }
+        if (gunCounter[6] == 560) {
+          gunCounter[6] = 900;
+          vida = vida - 1;
+          pergIm = 2;
+        }
+        break;
+      case 2:
+        fill('black');
+        rect(300, gunCounter[7], 10, 40);
+        if (gunCounter[7] <= 560) {
+          gunCounter[7] += 5;
+        }
+        if (gunCounter[7] == 560) {
+          gunCounter[7] = 900;
+          vida = vida - 1;
+          pergIm = 3;
+        }
+        break;
+      case 3:
+        fill('black');
+        rect(400, gunCounter[8], 10, 40);
+        if (gunCounter[8] <= 560) {
+          gunCounter[8] += 5;
+        }
+        if (gunCounter[8] == 560) {
+          gunCounter[8] = 900;
+          vida = vida - 1;
+          pergIm = 4;
+        }
+        break;
+    }
+    if (pergIm == 4 && vida > 0) {
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(12);
+      text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
+    }
+    else if (pergIm == 4 && vida == 0) {
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(12);
+      text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
     }
   }
 }
@@ -471,7 +579,6 @@ function mediumF() {
       text((numeros[0] + 2), 420, 470);
       text(numeros[0] + 3, 500, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
         fill('white');
         text(numeros[1], 240, 470);
         if (mouseIsPressed) {
@@ -481,7 +588,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
         fill('white');
         text(numeros[1] * 5, 320, 470);
         //é pra perder vida msa ta bugando
@@ -491,7 +597,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
         fill('white');
         text((numeros[0] + 2), 420, 470);
         if (mouseIsPressed) {
@@ -500,7 +605,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
         fill('white');
         text((numeros[0] + 3), 500, 470);
         if (mouseIsPressed) {
@@ -524,7 +628,6 @@ function mediumF() {
       text((numeros[2] + 4), 420, 470);
       text((numeros[3] + 2), 500, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
         fill('white');
         text(numeros[2] * numeros[3] * numeros[2], 240, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
@@ -535,7 +638,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
         fill('white');
         text(numeros[3] * numeros[2], 320, 470);
         //é pra perder vida msa ta bugando
@@ -545,7 +647,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
         fill('white');
         text((numeros[2] + 4), 420, 470);
         if (mouseIsPressed) {
@@ -554,7 +655,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
         fill('white');
         text((numeros[3] + 2), 500, 470);
         if (mouseIsPressed) {
@@ -578,7 +678,6 @@ function mediumF() {
       text(Math.round((numeros[4] * 3.5)), 420, 470);
       text(numeros[4] * numeros[5], 500, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
         fill('white');
         text(numeros[5], 240, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
@@ -589,7 +688,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
         fill('white');
         text((numeros[4] * 3), 320, 470);
         //é pra perder vida msa ta bugando
@@ -599,7 +697,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
         fill('white');
         text(Math.round((numeros[4] * 3.5)), 420, 470);
         if (mouseIsPressed) {
@@ -608,7 +705,6 @@ function mediumF() {
         }
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
         fill('white');
         text(numeros[4] * numeros[5], 500, 470);
         if (mouseIsPressed) {
@@ -652,198 +748,225 @@ function hardF() {
   fill('black');
   text('plane', 400, 170);
 
+  points();
+
+  tempo++;
+
+  if (tempo < 601) {
+    switch (pergH) {
+      case 1:
+        //fundo das perguntas
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(22);
+        text('Resolva a equacao', 220, 330);
+        //perguntas
+        text(numeros[6] + ' x ' + numeros[7] + ' = __', 296, 385);
+        textSize(18);
+        //opções
+        text((numeros[6] * numeros[7] + 3), 240, 470);
+        text(numeros[6] * numeros[7], 320, 470);
+        text((numeros[7] + 1), 420, 470);
+        text(numeros[7] + numeros[6], 500, 470);
+        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+          fill('white');
+          text((numeros[6] * numeros[7] + 3), 240, 470);
+          if (mouseIsPressed) {
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+          fill('white');
+          text(numeros[6] * numeros[7], 320, 470);
+          //é pra perder vida msa ta bugando
+          if (mouseIsPressed) {
+            pontoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+          fill('white');
+          text((numeros[7] + 1), 420, 470);
+          if (mouseIsPressed) {
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+          fill('white');
+          text((numeros[7] + numeros[6]), 500, 470);
+          if (mouseIsPressed) {
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        break;
+      case 2:
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(32);
+        text('Resolva a equacao', 250, 330);
+        text('20 x 20 = __', 296, 385);
+        textSize(32);
+        text('200', 240, 470);
+        text('420', 320, 470);
+        text('400', 400, 470);
+        text('240', 500, 470);
+        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 200', 208, 470);
+          //90 e 122 é igual a z e Z, porque se for enter da bug
+          if (mouseIsPressed) {
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 420', 288, 470);
+          //é pra perder vida msa ta bugando
+          if (mouseIsPressed) {
+            inimigoH++
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 400', 368, 470);
+          if (mouseIsPressed) {
+            pontoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 240', 468, 470);
+          if (mouseIsPressed) {
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        break;
+      case 3:
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(32);
+        text('Resolva a equacao', 250, 330);
+        text('12 x 4 = __', 296, 385);
+        textSize(32);
+        text('48', 240, 470);
+        text('36', 320, 470);
+        text('49', 400, 470);
+        text('40', 500, 470);
+        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 48', 208, 470);
+          //90 e 122 é igual a z e Z, porque se for enter da bug
+          if (mouseIsPressed) {
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            pontoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 36', 288, 470);
+          //é pra perder vida msa ta bugando
+          if (mouseIsPressed) {
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 49', 368, 470);
+          if (mouseIsPressed) {
+            inimigoH++;
+            pergH = 0;
+          }
+        }
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+          fill('white');
+          text('Δ 40', 468, 470);
+          if (mouseIsPressed) {
+            pontoH++;
+            pergH = 0;
+          }
+        }
+        break;
+    }
+  }
+  else if (tempo >= 601) {
+    pergH == 4;
+    vida == 0;
+  }
+}
+
+function impossibleF() {
+
+  image(hardBackground, 0, 0, 800, 600);
+  fill(0, 49, 20)
+  ellipse(600, eliY + 890, 2000, 1000);
+  fill(29, 79, 20)
+  rect(0, eliY + 585, 800, 20)
   fill('white');
-  rect(600, ship4, 50, 50)
+  //isso faz as montanha subir
+  if (eliY > 0) {
+    eliY -= 1.5;
+  }
+  //esse é o texto da vida
+  fill('white');
+  textSize(15)
+  text('vidas: ' + vida, 650, 50);
+
+  //esse é os avião kkkk
+  fill('white');
+  rect(200, ship1, 50, 50);
+  fill('black');
+  text('plane', 200, 170);
+
+  fill('white');
+  rect(300, ship2, 50, 50)
+  fill('black');
+  text('plane', 300, 170);
+
+  fill('white');
+  rect(400, ship3, 50, 50)
   fill('black');
   text('plane', 400, 170);
 
-  quiz();
+  points();
 
-  switch (pergH) {
+  switch (pergIm) {
     case 1:
-      //fundo das perguntas
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
       textSize(22);
       text('Resolva a equacao', 220, 330);
-      //perguntas
-      text(numeros[6] + ' x ' + numeros[7] + ' = __', 296, 385);
-      textSize(18);
-      //opções
-      text((numeros[6] * numeros[7] + 3), 240, 470);
-      text(numeros[6] * numeros[7], 320, 470);
-      text((numeros[7] + 1), 420, 470);
-      text(numeros[7] + numeros[6], 500, 470);
-      if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
-        fill('white');
-        text((numeros[6] * numeros[7] + 3), 240, 470);
-        if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
-        fill('white');
-        text(numeros[6] * numeros[7], 320, 470);
-        //é pra perder vida msa ta bugando
-        if (mouseIsPressed) {
-          ponto++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
-        fill('white');
-        text((numeros[7] + 1), 420, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
-        fill('white');
-        text((numeros[7] + numeros[6]), 500, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      break;
-    case 2:
-      fill('orange');
-      rect(200, 300, 400, 200);
-      fill('black');
-      textSize(32);
-      text('Resolva a equacao', 250, 330);
-      text('20 x 20 = __', 296, 385);
-      textSize(32);
-      text('200', 240, 470);
-      text('420', 320, 470);
-      text('400', 400, 470);
-      text('240', 500, 470);
-      if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
-        fill('white');
-        text('Δ 200', 208, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
-        if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
-        fill('white');
-        text('Δ 420', 288, 470);
-        //é pra perder vida msa ta bugando
-        if (mouseIsPressed) {
-          inimigo++
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
-        fill('white');
-        text('Δ 400', 368, 470);
-        if (mouseIsPressed) {
-          ponto++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
-        fill('white');
-        text('Δ 240', 468, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      break;
-    case 3:
-      fill('orange');
-      rect(200, 300, 400, 200);
-      fill('black');
-      textSize(32);
-      text('Resolva a equacao', 250, 330);
-      text('12 x 4 = __', 296, 385);
-      textSize(32);
-      text('48', 240, 470);
-      text('36', 320, 470);
-      text('49', 400, 470);
-      text('40', 500, 470);
-      if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-        resp = 1;
-        fill('white');
-        text('Δ 48', 208, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
-        if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
-          ponto++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-        resp = 2;
-        fill('white');
-        text('Δ 36', 288, 470);
-        //é pra perder vida msa ta bugando
-        if (mouseIsPressed) {
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-        resp = 3
-        fill('white');
-        text('Δ 49', 368, 470);
-        if (mouseIsPressed) {
-          inimigo++;
-          pergH = 0;
-        }
-      }
-      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-        resp = 4
-        fill('white');
-        text('Δ 40', 468, 470);
-        if (mouseIsPressed) {
-          ponto++;
-          pergH = 0;
-        }
-      }
-      break;
   }
 }
-
-function impossibleF() {
-  //quiz();
-}
-function quiz() {
-  //aqui a cada ponto, a bala aparece pra explodir um aviao
-
-}
-
 
 function keyPressed() {
 
   if (keyCode == ESCAPE && telaAtiva == 2) {
     telaAtiva = 0;
     moonY = 65, back = 0, sunY = 0;
-    perg = 1, resp = 0;
-    gunshotY = 560, gunshotY2 = 560, gunshotY3 = 560, ponto = 0;
-    countershotY = 200, countershotY2 = 200, countershotY3 = 200;
+    perg = 1, perH = 1, pergIm = 1;
+    gun = [560, 560, 560, 560, 560, 560, 560, 560, 560];
+    gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200];
+    ponto = 0, pontoH = 0, pontoIm = 0;
     ship1 = 150, ship2 = 150, ship3 = 150;
-    vida = 3, inimigo = 0; tempo = 0;
-    xM++ , yM++ , xM2++ , yM2++ , xM3++ , yM3++ , xH++ , yH++ , xIm++ , yIm++;
+    vida = 3, inimigo = 0, inimigoH = 0, inimigoIm = 0, tempo = 0;
   }
   /*for when the tutorial exists
   if (keyCode == ESCAPE && telaAtiva == 1) {
-    telaAtiva = 0;
+  telaAtiva = 0;
   }*/
 }
