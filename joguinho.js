@@ -19,7 +19,7 @@ var ponto = 0, pontoH = 0, pontoIm = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0
 //add ships
 var ship1 = 150, ship2 = 150, ship3 = 150;
 //se vida = 0, GAME OVER BITHC
-var vida = 3, tempo = 0, gameMode;
+var vida = 3, tempo = 0, gameMode, countdown = 2100;
 
 var qual = 1, falas =
   [
@@ -35,7 +35,7 @@ function preload() {
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
   moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
   hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
-  fonte = loadFont('Apple2.ttf');
+  //fonte = loadFont('Apple2.ttf');
 }
 
 function setup() {
@@ -58,7 +58,7 @@ function setup() {
 function draw() {
   background('#222');
   //É o nome
-  textFont(fonte)
+  //textFont(fonte)
   fill('#d0efff');
   textSize(30);
   text('Fast Thinking', 225, 90);
@@ -731,6 +731,9 @@ function hardF() {
   fill('white');
   textSize(15)
   text('vidas: ' + vida, 650, 50);
+  tempo++;
+  countdown--;
+  text(Math.floor(countdown/35), 550, 50);
 
   //esse é os avião kkkk
   fill('white');
@@ -750,10 +753,7 @@ function hardF() {
 
   points();
 
-  tempo++;
-  text(tempo, 550, 50);
-  
-  if (tempo < 601) {
+  if (Math.floor(countdown/35) > 0) {
     switch (pergH) {
       case 1:
         //fundo das perguntas
@@ -770,7 +770,7 @@ function hardF() {
         text(numeros[6] * numeros[7], 320, 470);
         text((numeros[7] + 1), 420, 470);
         text(numeros[7] + numeros[6], 500, 470);
-        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
           fill('white');
           text((numeros[6] * numeros[7] + 3), 240, 470);
           if (mouseIsPressed) {
@@ -779,7 +779,7 @@ function hardF() {
             pergH = 0;
           }
         }
-        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
           fill('white');
           text(numeros[6] * numeros[7], 320, 470);
           //é pra perder vida msa ta bugando
@@ -788,7 +788,7 @@ function hardF() {
             pergH = 0;
           }
         }
-        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
           fill('white');
           text((numeros[7] + 1), 420, 470);
           if (mouseIsPressed) {
@@ -796,7 +796,7 @@ function hardF() {
             pergH = 0;
           }
         }
-        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410 && tempo >= 10) {
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
           fill('white');
           text((numeros[7] + numeros[6]), 500, 470);
           if (mouseIsPressed) {
@@ -903,9 +903,14 @@ function hardF() {
         break;
     }
   }
-  else if (tempo >= 601) {
-    pergH == 4;
-    vida == 0;
+  if (Math.floor(countdown/35) <= 0) {
+      pergH = 0;
+      countdown = 0;
+      fill('orange');
+      rect(200, 300, 400, 200);
+      fill('black');
+      textSize(12);
+      text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
   }
 }
 
