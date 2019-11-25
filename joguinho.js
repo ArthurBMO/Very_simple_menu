@@ -1,5 +1,9 @@
-//pra função preload
-let moonImage, derp, medium, hard, impossible, hardBackground, fonte, explosion, win, death, shot;
+//images or background
+let moonImage, derp, medium, hard, impossible, hardBackground, fonte;
+//sounds
+let boom, wow, death, oof, pew;
+//sprites
+let plane, gub, gub1, gubam, gubam1, gubam2;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
 //serve pras montanhas subirem
@@ -20,7 +24,6 @@ var ponto = 0, pontoH = 0, pontoIm = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0
 var ship1 = 150, ship2 = 150, ship3 = 150;
 //se vida = 0, GAME OVER BITHC
 var vida = 3, tempo = 0, gameMode, countdown = 3600;
-
 var qual = 1, falas =
   [
     { fala: " Ola, Tux. Esta havendo uma invasao aerea \nprecisamos de voce para controlar as armas." },
@@ -31,11 +34,16 @@ var qual = 1, falas =
   ];
 
 function preload() {
+  plane = loadImage('plane.png');
   derp = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
   moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
   hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
   fonte = loadFont('Apple2.ttf');
+  oof = loadSound('./sounds/roblox-death-sound_1.mp3');
+  boom = loadSound('./sounds/BOOOM.mp3');
+  wow = loadSound('./sounds/pweds_wow.mp3');
+  pew = loadSound('./sounds/pew_shot.mp3');
 }
 
 function setup() {
@@ -189,12 +197,12 @@ function intro() {
     case 4:
       text(falas[3].fala, 50, 550);
       fill('white');
-      rect(200, ship1, 50, 50);
+      image(plane, 200, ship1, 100, 50);
       if (ship1 >= 130)
         ship1 -= 4;
       if (ship1 <= 170)
         ship1 += 3;
-      tempo++
+      tempo++;
       if (mouseIsPressed && tempo > 120 && telaAtiva == 5) {
         qual = 0;
         tempo = 0;
@@ -212,12 +220,16 @@ function points() {
       case 1:
         fill('black');
         rect(200, gun[0], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         //pra bala subir
         if (gun[0] >= 200) {
           gun[0] -= 5;
         }
         //pra ela colidir com o aviao e puxar a proxima pergunta
         if (gun[0] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship1 = -100;
           gun[0] = -100;
           perg = 2;
@@ -226,10 +238,14 @@ function points() {
       case 2:
         fill('black');
         rect(300, gun[1], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gun[1] >= 200) {
           gun[1] -= 5;
         }
         if (gun[1] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship2 = -10;
           gun[1] = -10;
           perg = 3;
@@ -238,10 +254,14 @@ function points() {
       case 3:
         fill('black');
         rect(400, gun[2], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gun[2] >= 200) {
           gun[2] -= 5;
         }
         if (gun[2] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship3 = -10;
           gun[2] = -10;
           perg = 4;
@@ -253,10 +273,14 @@ function points() {
       case 1:
         fill('black');
         rect(200, gunCounter[0], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[0] <= 560) {
           gunCounter[0] += 5;
         }
         if (gunCounter[0] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[0] = 900;
           vida = vida - 1;
           perg = 2;
@@ -265,10 +289,14 @@ function points() {
       case 2:
         fill('black');
         rect(300, gunCounter[1], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[1] <= 560) {
           gunCounter[1] += 5;
         }
         if (gunCounter[1] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[1] = 900;
           vida = vida - 1;
           perg = 3;
@@ -277,10 +305,14 @@ function points() {
       case 3:
         fill('black');
         rect(400, gunCounter[2], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[2] <= 560) {
           gunCounter[2] += 5;
         }
         if (gunCounter[2] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[2] = 900;
           vida = vida - 1;
           perg = 4;
@@ -308,12 +340,16 @@ function points() {
       case 1:
         fill('black');
         rect(200, gun[3], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         //pra bala subir
         if (gun[3] >= 200) {
           gun[3] -= 5;
         }
         //pra ela colidir com o aviao e puxar a proxima pergunta
         if (gun[3] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship1 = -100;
           gun[3] = -100;
           pergH = 2;
@@ -322,10 +358,14 @@ function points() {
       case 2:
         fill('black');
         rect(300, gun[4], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gun[4] >= 200) {
           gun[4] -= 5;
         }
         if (gun[4] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship2 = -10;
           gun[4] = -10;
           pergH = 3;
@@ -334,10 +374,14 @@ function points() {
       case 3:
         fill('black');
         rect(400, gun[5], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gun[5] >= 200) {
           gun[5] -= 5;
         }
         if (gun[5] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship3 = -10;
           gun[5] = -10;
           pergH = 4;
@@ -349,10 +393,14 @@ function points() {
       case 1:
         fill('black');
         rect(200, gunCounter[3], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[3] <= 560) {
           gunCounter[3] += 5;
         }
         if (gunCounter[3] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[3] = 900;
           vida = vida - 1;
           pergH = 2;
@@ -361,10 +409,14 @@ function points() {
       case 2:
         fill('black');
         rect(300, gunCounter[4], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[4] <= 560) {
           gunCounter[4] += 5;
         }
         if (gunCounter[4] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[4] = 900;
           vida = vida - 1;
           pergH = 3;
@@ -373,12 +425,15 @@ function points() {
       case 3:
         fill('black');
         rect(400, gunCounter[5], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[5] <= 560) {
           gunCounter[5] += 5;
         }
         if (gunCounter[5] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[5] = 900;
-
           vida = vida - 1;
           pergH = 4;
         }
@@ -406,12 +461,16 @@ function points() {
       case 1:
         fill('black');
         rect(200, gun[6], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         //pra bala subir
         if (gun[6] >= 200) {
           gun[6] -= 5;
         }
         //pra ela colidir com o aviao e puxar a proxima pergunta
         if (gun[6] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship1 = -100;
           gun[6] = -100;
           pergIm = 2;
@@ -420,10 +479,14 @@ function points() {
       case 2:
         fill('black');
         rect(300, gun[7], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gun[7] >= 200) {
           gun[7] -= 5;
         }
         if (gun[7] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship2 = -10;
           gun[7] = -10;
           pergIm = 3;
@@ -432,10 +495,14 @@ function points() {
       case 3:
         fill('black');
         rect(400, gun[8], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gun[8] >= 200) {
           gun[8] -= 5;
         }
         if (gun[8] == 200) {
+          boom.setVolume(0.1);
+          boom.play();
           ship3 = -10;
           gun[8] = -10;
           pergIm = 4;
@@ -447,10 +514,14 @@ function points() {
       case 1:
         fill('black');
         rect(200, gunCounter[6], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[6] <= 560) {
           gunCounter[6] += 5;
         }
         if (gunCounter[6] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[6] = 900;
           vida = vida - 1;
           pergIm = 2;
@@ -459,10 +530,14 @@ function points() {
       case 2:
         fill('black');
         rect(300, gunCounter[7], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[7] <= 560) {
           gunCounter[7] += 5;
         }
         if (gunCounter[7] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[7] = 900;
           vida = vida - 1;
           pergIm = 3;
@@ -471,10 +546,14 @@ function points() {
       case 3:
         fill('black');
         rect(400, gunCounter[8], 10, 40);
+        pew.setVolume(0.1);
+        pew.play();
         if (gunCounter[8] <= 560) {
           gunCounter[8] += 5;
         }
         if (gunCounter[8] == 560) {
+          oof.setVolume(0.1);
+          oof.play();
           gunCounter[8] = 900;
           vida = vida - 1;
           pergIm = 4;
@@ -541,20 +620,23 @@ function mediumF() {
   text('vidas: ' + vida, 650, 50);
 
   //esse é os avião kkkk
-  fill('white');
-  rect(200, ship1, 50, 50);
-  fill('black');
-  text('plane', 200, 170);
+  image(plane, 200, ship1, 100, 50);
+  if (ship1 >= 130)
+    ship1 -= 4;
+  if (ship1 <= 170)
+    ship1 += 3;
 
-  fill('white');
-  rect(300, ship2, 50, 50)
-  fill('black');
-  text('plane', 300, 170);
+  image(plane, 350, ship2, 100, 50);
+  if (ship2 >= 130)
+    ship2 -= 4;
+  if (ship2 <= 170)
+    ship2 += 3;
 
-  fill('white');
-  rect(400, ship3, 50, 50)
-  fill('black');
-  text('plane', 400, 170);
+  image(plane, 500, ship3, 100, 50);
+  if (ship3 >= 130)
+    ship3 -= 4;
+  if (ship3 <= 170)
+    ship3 += 3;
 
   //what happens when questions happen
   points();
@@ -732,7 +814,7 @@ function hardF() {
   text('vidas: ' + vida, 650, 50);
   tempo++;
   countdown--;
-  text(Math.floor(countdown / 60), 550, 50);
+  text('Tempo restante: ' + Math.floor(countdown / 60), 260, 550);
 
   //esse é os avião kkkk
   fill('white');
@@ -1098,15 +1180,19 @@ function impossibleF() {
 
 function keyPressed() {
 
-  if (keyCode == ESCAPE && telaAtiva == 2) {
+  if (keyCode == ESCAPE && telaAtiva == 2 || telaAtiva == 3) {
     telaAtiva = 0;
     moonY = 65, back = 0, sunY = 0;
-    perg = 1, perH = 1, pergIm = 1;
+    perg = 1, pergH = 1, pergIm = 1;
     gun = [560, 560, 560, 560, 560, 560, 560, 560, 560];
     gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200];
     ponto = 0, pontoH = 0, pontoIm = 0;
     ship1 = 150, ship2 = 150, ship3 = 150;
     vida = 3, inimigo = 0, inimigoH = 0, inimigoIm = 0, tempo = 0;
+    countdown = 3600;
+  }
+  if (keyCode == ESCAPE && telaAtiva == 1) {
+    telaAtiva = 0;
   }
   /*for when the tutorial exists
   if (keyCode == ESCAPE && telaAtiva == 1) {
