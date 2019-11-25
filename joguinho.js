@@ -1,7 +1,8 @@
 //images or background
 let moonImage, derp, medium, hard, impossible, hardBackground, fonte;
+var explosion;
 //sounds
-let boom, wow, death, oof, pew;
+var boom = 0, wow = 0, death = 0, oof = 0, pew = 0, slowOof = 0;
 //sprites
 let plane, gub, gub1, gubam, gubam1, gubam2;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
@@ -34,15 +35,16 @@ var qual = 1, falas =
   ];
 
 function preload() {
-  plane = loadImage('plane.png');
+  plane = loadImage('./plane.png');
   derp = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
   moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
   hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
   fonte = loadFont('Apple2.ttf');
-  oof = loadSound('./sounds/roblox-death-sound_1.mp3');
+  oof = loadSound('./sounds/oof.m4a');
+  slowOof = loadSound('./sounds/slow-oof.m4a');
   boom = loadSound('./sounds/BOOOM.mp3');
-  wow = loadSound('./sounds/pweds_wow.mp3');
+  wow = loadSound('./sounds/pewds_wow.mp3');
   pew = loadSound('./sounds/pew_shot.mp3');
 }
 
@@ -219,9 +221,7 @@ function points() {
     switch (ponto) {
       case 1:
         fill('black');
-        rect(200, gun[0], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(240, gun[0], 10, 40);
         //pra bala subir
         if (gun[0] >= 200) {
           gun[0] -= 5;
@@ -237,33 +237,29 @@ function points() {
         break;
       case 2:
         fill('black');
-        rect(300, gun[1], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(400, gun[1], 10, 40);
         if (gun[1] >= 200) {
           gun[1] -= 5;
         }
         if (gun[1] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          ship2 = -10;
-          gun[1] = -10;
+          ship2 = -100;
+          gun[1] = -100;
           perg = 3;
         }
         break;
       case 3:
         fill('black');
-        rect(400, gun[2], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(540, gun[2], 10, 40);
         if (gun[2] >= 200) {
           gun[2] -= 5;
         }
         if (gun[2] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          ship3 = -10;
-          gun[2] = -10;
+          ship3 = -100;
+          gun[2] = -100;
           perg = 4;
         }
         break;
@@ -272,14 +268,12 @@ function points() {
     switch (inimigo) {
       case 1:
         fill('black');
-        rect(200, gunCounter[0], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(240, gunCounter[0], 10, 40);
         if (gunCounter[0] <= 560) {
           gunCounter[0] += 5;
         }
         if (gunCounter[0] == 560) {
-          oof.setVolume(0.1);
+          oof.setVolume(0.5);
           oof.play();
           gunCounter[0] = 900;
           vida = vida - 1;
@@ -288,14 +282,12 @@ function points() {
         break;
       case 2:
         fill('black');
-        rect(300, gunCounter[1], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(400, gunCounter[1], 10, 40);
         if (gunCounter[1] <= 560) {
           gunCounter[1] += 5;
         }
         if (gunCounter[1] == 560) {
-          oof.setVolume(0.1);
+          oof.setVolume(0.5);
           oof.play();
           gunCounter[1] = 900;
           vida = vida - 1;
@@ -304,15 +296,13 @@ function points() {
         break;
       case 3:
         fill('black');
-        rect(400, gunCounter[2], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(540, gunCounter[2], 10, 40);
         if (gunCounter[2] <= 560) {
           gunCounter[2] += 5;
         }
         if (gunCounter[2] == 560) {
-          oof.setVolume(0.1);
-          oof.play();
+          slowOof.setVolume(0.5);
+          slowOof.play();
           gunCounter[2] = 900;
           vida = vida - 1;
           perg = 4;
@@ -321,11 +311,14 @@ function points() {
     }
     //só pra testar mesmo
     if (perg == 4 && vida > 0) {
+      tempo++
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
       textSize(12);
       text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
+      if(tempo == 10)
+        wow.play();
     }
     else if (perg == 4 && vida == 0) {
       fill('orange');
@@ -339,9 +332,7 @@ function points() {
     switch (pontoH) {
       case 1:
         fill('black');
-        rect(200, gun[3], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(240, gun[3], 10, 40);
         //pra bala subir
         if (gun[3] >= 200) {
           gun[3] -= 5;
@@ -357,9 +348,7 @@ function points() {
         break;
       case 2:
         fill('black');
-        rect(300, gun[4], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(400, gun[4], 10, 40);
         if (gun[4] >= 200) {
           gun[4] -= 5;
         }
@@ -373,9 +362,7 @@ function points() {
         break;
       case 3:
         fill('black');
-        rect(400, gun[5], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(540, gun[5], 10, 40);
         if (gun[5] >= 200) {
           gun[5] -= 5;
         }
@@ -392,14 +379,12 @@ function points() {
     switch (inimigoH) {
       case 1:
         fill('black');
-        rect(200, gunCounter[3], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(240, gunCounter[3], 10, 40);
         if (gunCounter[3] <= 560) {
           gunCounter[3] += 5;
         }
         if (gunCounter[3] == 560) {
-          oof.setVolume(0.1);
+          oof.setVolume(0.5);
           oof.play();
           gunCounter[3] = 900;
           vida = vida - 1;
@@ -408,14 +393,12 @@ function points() {
         break;
       case 2:
         fill('black');
-        rect(300, gunCounter[4], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(400, gunCounter[4], 10, 40);
         if (gunCounter[4] <= 560) {
           gunCounter[4] += 5;
         }
         if (gunCounter[4] == 560) {
-          oof.setVolume(0.1);
+          oof.setVolume(0.5);
           oof.play();
           gunCounter[4] = 900;
           vida = vida - 1;
@@ -424,15 +407,13 @@ function points() {
         break;
       case 3:
         fill('black');
-        rect(400, gunCounter[5], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(540, gunCounter[5], 10, 40);
         if (gunCounter[5] <= 560) {
           gunCounter[5] += 5;
         }
         if (gunCounter[5] == 560) {
-          oof.setVolume(0.1);
-          oof.play();
+          slowOof.setVolume(0.5);
+          slowOof.play();
           gunCounter[5] = 900;
           vida = vida - 1;
           pergH = 4;
@@ -460,9 +441,7 @@ function points() {
     switch (pontoIm) {
       case 1:
         fill('black');
-        rect(200, gun[6], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(240, gun[6], 10, 40);
         //pra bala subir
         if (gun[6] >= 200) {
           gun[6] -= 5;
@@ -478,9 +457,7 @@ function points() {
         break;
       case 2:
         fill('black');
-        rect(300, gun[7], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(400, gun[7], 10, 40);
         if (gun[7] >= 200) {
           gun[7] -= 5;
         }
@@ -494,9 +471,7 @@ function points() {
         break;
       case 3:
         fill('black');
-        rect(400, gun[8], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(540, gun[8], 10, 40);
         if (gun[8] >= 200) {
           gun[8] -= 5;
         }
@@ -513,14 +488,12 @@ function points() {
     switch (inimigoIm) {
       case 1:
         fill('black');
-        rect(200, gunCounter[6], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(210, gunCounter[6], 10, 40);
         if (gunCounter[6] <= 560) {
           gunCounter[6] += 5;
         }
         if (gunCounter[6] == 560) {
-          oof.setVolume(0.1);
+          oof.setVolume(0.5);
           oof.play();
           gunCounter[6] = 900;
           vida = vida - 1;
@@ -529,14 +502,12 @@ function points() {
         break;
       case 2:
         fill('black');
-        rect(300, gunCounter[7], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(400, gunCounter[7], 10, 40);
         if (gunCounter[7] <= 560) {
           gunCounter[7] += 5;
         }
         if (gunCounter[7] == 560) {
-          oof.setVolume(0.1);
+          oof.setVolume(0.5);
           oof.play();
           gunCounter[7] = 900;
           vida = vida - 1;
@@ -545,15 +516,13 @@ function points() {
         break;
       case 3:
         fill('black');
-        rect(400, gunCounter[8], 10, 40);
-        pew.setVolume(0.1);
-        pew.play();
+        rect(540, gunCounter[8], 10, 40);
         if (gunCounter[8] <= 560) {
           gunCounter[8] += 5;
         }
         if (gunCounter[8] == 560) {
-          oof.setVolume(0.1);
-          oof.play();
+          slowOof.setVolume(0.5);
+          slowOof.play();
           gunCounter[8] = 900;
           vida = vida - 1;
           pergIm = 4;
@@ -664,6 +633,8 @@ function mediumF() {
         text(numeros[1], 240, 470);
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
+          pew.setVolume(0.1);
+          pew.play();
           ponto++;
           perg = 0;
         }
@@ -673,6 +644,8 @@ function mediumF() {
         text(numeros[1] * 5, 320, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -681,6 +654,8 @@ function mediumF() {
         fill('white');
         text((numeros[0] + 2), 420, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -689,6 +664,8 @@ function mediumF() {
         fill('white');
         text((numeros[0] + 3), 500, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -713,6 +690,8 @@ function mediumF() {
         text(numeros[2] * numeros[3] * numeros[2], 240, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           //da um ponto e a pergunta vai 0, pra depois proceder
           inimigo++;
           perg = 0;
@@ -723,6 +702,8 @@ function mediumF() {
         text(numeros[3] * numeros[2], 320, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           ponto++
           perg = 0;
         }
@@ -731,6 +712,8 @@ function mediumF() {
         fill('white');
         text((numeros[2] + 4), 420, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -739,6 +722,8 @@ function mediumF() {
         fill('white');
         text((numeros[3] + 2), 500, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -763,6 +748,8 @@ function mediumF() {
         text(numeros[5], 240, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           //da um ponto e a pergunta vai 0, pra depois proceder
           inimigo++;
           perg = 0;
@@ -773,6 +760,8 @@ function mediumF() {
         text((numeros[4] * 3), 320, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -781,6 +770,8 @@ function mediumF() {
         fill('white');
         text(Math.round((numeros[4] * 3.5)), 420, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigo++;
           perg = 0;
         }
@@ -790,6 +781,8 @@ function mediumF() {
         text(numeros[4] * numeros[5], 500, 470);
         if (mouseIsPressed) {
           ponto++;
+          pew.setVolume(0.1);
+          pew.play();
           perg = 0;
         }
       }
@@ -817,20 +810,23 @@ function hardF() {
   text('Tempo restante: ' + Math.floor(countdown / 60), 260, 550);
 
   //esse é os avião kkkk
-  fill('white');
-  rect(200, ship1, 50, 50);
-  fill('black');
-  text('plane', 200, 170);
+    image(plane, 200, ship1, 100, 50);
+  if (ship1 >= 130)
+    ship1 -= 4;
+  if (ship1 <= 170)
+    ship1 += 3;
 
-  fill('white');
-  rect(300, ship2, 50, 50)
-  fill('black');
-  text('plane', 300, 170);
+  image(plane, 350, ship2, 100, 50);
+  if (ship2 >= 130)
+    ship2 -= 4;
+  if (ship2 <= 170)
+    ship2 += 3;
 
-  fill('white');
-  rect(400, ship3, 50, 50)
-  fill('black');
-  text('plane', 400, 170);
+  image(plane, 500, ship3, 100, 50);
+  if (ship3 >= 130)
+    ship3 -= 4;
+  if (ship3 <= 170)
+    ship3 += 3;
 
   points();
 
@@ -854,6 +850,8 @@ function hardF() {
           fill('white');
           text((numeros[0]) + 'x' + (numeros[1] + 2), 210, 470);
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
             pergH = 0;
@@ -864,6 +862,8 @@ function hardF() {
           text(numeros[0] + 'x' + numeros[1], 310, 470);
           //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             pontoH++;
             pergH = 0;
           }
@@ -872,6 +872,8 @@ function hardF() {
           fill('white');
           text((numeros[0] + 2) + 'x' + numeros[1], 410, 470);
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -881,6 +883,8 @@ function hardF() {
           text((numeros[0] + 1) + 'x' + (numeros[1] + 2), 510, 470);
           if (mouseIsPressed) {
             inimigoH++;
+            pew.setVolume(0.1);
+          pew.play();
             pergH = 0;
           }
         }
@@ -904,6 +908,8 @@ function hardF() {
           if (mouseIsPressed) {
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
+            pew.setVolume(0.1);
+          pew.play();
             pergH = 0;
           }
         }
@@ -912,6 +918,8 @@ function hardF() {
           text((numeros[2] + 1) + 'x' + (numeros[3] + 1), 310, 470);
           //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             inimigoH++
             pergH = 0;
           }
@@ -920,6 +928,8 @@ function hardF() {
           fill('white');
           text((numeros[2]) + 'x' + (numeros[3]), 410, 470);
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             pontoH++;
             pergH = 0;
           }
@@ -928,6 +938,8 @@ function hardF() {
           fill('white');
           text((numeros[2] + 1) + 'x' + (numeros[3] + 3), 510, 470);
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -950,6 +962,8 @@ function hardF() {
           text((numeros[4] + 2) + 'x' + numeros[5], 210, 470);
           //90 e 122 é igual a z e Z, porque se for enter da bug
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
             pergH = 0;
@@ -960,6 +974,8 @@ function hardF() {
           text((numeros[4] + 3) + 'x' + numeros[5], 310, 470);
           //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -968,6 +984,8 @@ function hardF() {
           fill('white');
           text((numeros[4] + 1) + 'x' + (numeros[5] + 4), 410, 470);
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -976,6 +994,8 @@ function hardF() {
           fill('white');
           text((numeros[4]) + 'x' + numeros[5], 510, 470);
           if (mouseIsPressed) {
+            pew.setVolume(0.1);
+          pew.play();
             pontoH++;
             pergH = 0;
           }
@@ -1012,20 +1032,23 @@ function impossibleF() {
   text('vidas: ' + vida, 650, 50);
 
   //esse é os avião kkkk
-  fill('white');
-  rect(200, ship1, 50, 50);
-  fill('black');
-  text('plane', 200, 170);
+  image(plane, 200, ship1, 100, 50);
+  if (ship1 >= 130)
+    ship1 -= 4;
+  if (ship1 <= 170)
+    ship1 += 3;
 
-  fill('white');
-  rect(300, ship2, 50, 50)
-  fill('black');
-  text('plane', 300, 170);
+  image(plane, 350, ship2, 100, 50);
+  if (ship2 >= 130)
+    ship2 -= 4;
+  if (ship2 <= 170)
+    ship2 += 3;
 
-  fill('white');
-  rect(400, ship3, 50, 50)
-  fill('black');
-  text('plane', 400, 170);
+  image(plane, 500, ship3, 100, 50);
+  if (ship3 >= 130)
+    ship3 -= 4;
+  if (ship3 <= 170)
+    ship3 += 3;
 
   points();
 
@@ -1049,6 +1072,8 @@ function impossibleF() {
         text((numeros[12] * numeros[13] + 1), 240, 470);
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1058,6 +1083,8 @@ function impossibleF() {
         text(numeros[12] * numeros[13], 320, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           pontoIm++;
           pergIm = 0;
         }
@@ -1066,6 +1093,8 @@ function impossibleF() {
         fill('white');
         text((numeros[13] + 1), 420, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1074,6 +1103,8 @@ function impossibleF() {
         fill('white');
         text((numeros[13] + numeros[12]), 500, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1097,6 +1128,8 @@ function impossibleF() {
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1106,6 +1139,8 @@ function impossibleF() {
         text('Δ 420', 288, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++
           pergIm = 0;
         }
@@ -1114,6 +1149,8 @@ function impossibleF() {
         fill('white');
         text('Δ 400', 368, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           pontoIm++;
           pergIm = 0;
         }
@@ -1122,6 +1159,8 @@ function impossibleF() {
         fill('white');
         text('Δ 240', 468, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1144,6 +1183,8 @@ function impossibleF() {
         text('Δ 48', 208, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           //da um ponto e a pergunta vai 0, pra depois proceder
           pontoIm++;
           pergIm = 0;
@@ -1154,6 +1195,8 @@ function impossibleF() {
         text('Δ 36', 288, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1162,6 +1205,8 @@ function impossibleF() {
         fill('white');
         text('Δ 49', 368, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           inimigoIm++;
           pergIm = 0;
         }
@@ -1170,6 +1215,8 @@ function impossibleF() {
         fill('white');
         text('Δ 40', 468, 470);
         if (mouseIsPressed) {
+          pew.setVolume(0.1);
+          pew.play();
           pontoIm++;
           pergIm = 0;
         }
