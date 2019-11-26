@@ -1,5 +1,5 @@
 //images or background
-let moonImage, derp, medium, hard, impossible, hardBackground, fonte;
+let moonImage, derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
 var explosion;
 //sounds
 var boom = 0, wow = 0, death = 0, oof = 0, pew = 0, slowOof = 0;
@@ -35,17 +35,20 @@ var qual = 1, falas =
   ];
 
 function preload() {
-  plane = loadImage('./plane.png');
+  plane = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/plane.png');
   derp = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
-  medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/level%201.png');
-  moonImage = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/moon.png')
-  hardBackground = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maxresdefault(4).jpg');
-  fonte = loadFont('Apple2.ttf');
-  oof = loadSound('./sounds/oof.m4a');
-  slowOof = loadSound('./sounds/slow-oof.m4a');
-  boom = loadSound('./sounds/BOOOM.mp3');
-  wow = loadSound('./sounds/pewds_wow.mp3');
-  pew = loadSound('./sounds/pew_shot.mp3');
+  medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/level%201.png');
+  hard = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%202.png');
+  impossible = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%203.png');
+  ceu 1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
+  ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
+  ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
+  fonte = loadFont('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Apple2.ttf');
+  oof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/oof.mp3');
+  slowOof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/slow-oof.m4a');
+  boom = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/BOOOM.mp3');
+  wow = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/pewds_wow.mp3');
+  pew = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/pew_shot.mp3');
 }
 
 function setup() {
@@ -120,9 +123,9 @@ function difficult() {
   text('Selecione a dificuldade', 220, 300);
   image(medium, 100, 350, 110, 100);
   text('Medio', 115, 500);
-  rect(320, 350, 110, 100);
+  image(hard, 320, 350, 110, 100);
   text('Dificil', 325, 500);
-  rect(550, 350, 110, 100);
+  image(impossible, 550, 350, 110, 100);
   text('O ceu ta caindo', 510, 500);
   if (mouseX >= 100 && mouseX <= 210 && mouseY <= 455 && mouseY >= 350 && telaAtiva == 1) {
     noFill();
@@ -574,7 +577,7 @@ function mediumF() {
     sunY += 20;
   }
   //isso é a montanha
-  fill(19, 69, 0)
+  fill(88, 234, 65)
   ellipse(600, eliY + 890, 2000, 1000);
   fill(49, 99, 0)
   rect(0, eliY + 585, 800, 20)
@@ -792,9 +795,9 @@ function mediumF() {
 
 function hardF() {
   image(hardBackground, 0, 0, 800, 600);
-  fill(0, 49, 20)
+  fill(115, 174, 105)
   ellipse(600, eliY + 890, 2000, 1000);
-  fill(29, 79, 20)
+  //fill(29, 79, 20)
   rect(0, eliY + 585, 800, 20)
   fill('white');
   //isso faz as montanha subir
@@ -1016,10 +1019,10 @@ function hardF() {
 
 function impossibleF() {
 
-  image(hardBackground, 0, 0, 800, 600);
-  fill(0, 49, 20)
+  background(0).
+  fill(255, 97, 74);
   ellipse(600, eliY + 890, 2000, 1000);
-  fill(29, 79, 20)
+  //fill(29, 79, 20)
   rect(0, eliY + 585, 800, 20)
   fill('white');
   //isso faz as montanha subir
