@@ -40,7 +40,7 @@ function preload() {
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/level%201.png');
   hard = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%202.png');
   impossible = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%203.png');
-  ceu 1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
+  ceu1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
   ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
   ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
   fonte = loadFont('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Apple2.ttf');
