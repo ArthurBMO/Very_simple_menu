@@ -1,6 +1,5 @@
 //images or background
 let moonImage, derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
-var explosion;
 //sounds
 var boom = 0, wow = 0, death = 0, oof = 0, pew = 0, slowOof = 0;
 //sprites
@@ -247,6 +246,7 @@ function points() {
         if (gun[1] == 200) {
           boom.setVolume(0.1);
           boom.play();
+          tint(255, 127);
           ship2 = -100;
           gun[1] = -100;
           perg = 3;
@@ -552,30 +552,7 @@ function points() {
 function mediumF() {
   //OS BACK AUMENTA PRA COR DO FUNDO FICAR CLARA
   tempo = 0;
-  background(back, back, back);
-  if (back >= 0 && back <= 232) {
-    back += 40;
-  }
-
-  //isso é pra lua cair
-  image(moonImage, 25, moonY + 5, 50, 50);
-  if (moonY > 0 && sunY >= 40) {
-    moonY += 20;
-  }
-  //esse é o sol, sim tem 3 ellipse pra ficar bonito
-  fill('white')
-  stroke(0);
-  ellipse(47.5, sunY, 50, 55);
-  fill(255, 140, 0)
-  ellipse(55, sunY, 50, 55);
-  noStroke();
-  fill(255, 215, 0)
-  ellipse(50, sunY, 50, 55);
-
-  //pro sol bater na lua e ela cair
-  if (sunY >= 0 && sunY <= 70) {
-    sunY += 20;
-  }
+  image(ceu1, 0, 0, 800, 600);
   //isso é a montanha
   fill(88, 234, 65)
   ellipse(600, eliY + 890, 2000, 1000);
@@ -794,7 +771,7 @@ function mediumF() {
 }
 
 function hardF() {
-  image(hardBackground, 0, 0, 800, 600);
+  image(ceu2, 0, 0, 800, 600);
   fill(115, 174, 105)
   ellipse(600, eliY + 890, 2000, 1000);
   //fill(29, 79, 20)
