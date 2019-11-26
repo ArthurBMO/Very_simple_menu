@@ -3,7 +3,7 @@ let moonImage, derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
 //sounds
 var boom = 0, wow = 0, death = 0, oof = 0, pew = 0, slowOof = 0;
 //sprites
-let plane, gub, gub1, gubam, gubam1, gubam2;
+let plane, gib, gubam, gubama;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
 //serve pras montanhas subirem
@@ -34,7 +34,6 @@ var qual = 1, falas =
   ];
 
 function preload() {
-  plane = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/plane.png');
   derp = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/level%201.png');
   hard = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%202.png');
@@ -42,6 +41,10 @@ function preload() {
   ceu1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
   ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
   ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
+  plane = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/plane.png');
+  gib = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gib2.png');
+  gubam = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gubam2.png');
+  gubama = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_gubama1.png');
   fonte = loadFont('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Apple2.ttf');
   oof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/oof.mp3');
   slowOof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/slow-oof.m4a');
@@ -996,7 +999,7 @@ function hardF() {
 
 function impossibleF() {
 
-  background(0).
+  image(ceu3, 0 ,0, 800, 600);
   fill(255, 97, 74);
   ellipse(600, eliY + 890, 2000, 1000);
   //fill(29, 79, 20)
@@ -1012,19 +1015,19 @@ function impossibleF() {
   text('vidas: ' + vida, 650, 50);
 
   //esse é os avião kkkk
-  image(plane, 200, ship1, 100, 50);
+  image(gib, 200, ship1, 50, 50);
   if (ship1 >= 130)
     ship1 -= 4;
   if (ship1 <= 170)
     ship1 += 3;
 
-  image(plane, 350, ship2, 100, 50);
+  image(gib, 350, ship2, 50, 50);
   if (ship2 >= 130)
     ship2 -= 4;
   if (ship2 <= 170)
     ship2 += 3;
 
-  image(plane, 500, ship3, 100, 50);
+  image(gib, 500, ship3, 50, 50);
   if (ship3 >= 130)
     ship3 -= 4;
   if (ship3 <= 170)
@@ -1203,6 +1206,7 @@ function impossibleF() {
       }
       break;
   }
+  
 }
 
 function keyPressed() {
