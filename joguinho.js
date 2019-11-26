@@ -3,11 +3,11 @@ let moonImage, derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
 //sounds
 var boom = 0, wow = 0, death = 0, oof = 0, pew = 0, slowOof = 0;
 //sprites
-let plane, gib, gubam, gubama;
+let plane, gub, gub1, gubam, gubama, gubam1;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
 //serve pras montanhas subirem
-var eliX = 0, eliY = 210;
+var eliX = 0, eliY = 210, finalBoss = -100;
 //moonY é a posição da lua, sunY do sol e back pra o background sair do preto
 // pro branco. Tudo isso durante o jogo
 var moonY = 65, back = 0, sunY = 0;
@@ -38,13 +38,13 @@ function preload() {
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/level%201.png');
   hard = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%202.png');
   impossible = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%203.png');
-  ceu1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
-  ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
-  ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
   plane = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/plane.png');
   gib = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gib2.png');
   gubam = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gubam2.png');
   gubama = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_gubama1.png');
+  ceu1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
+  ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
+  ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
   fonte = loadFont('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Apple2.ttf');
   oof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/oof.mp3');
   slowOof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/slow-oof.m4a');
@@ -113,6 +113,9 @@ function draw() {
       break;
     case 5:
       intro();
+      break;
+    case 6:
+      ending();
       break;
   }
 }
@@ -249,7 +252,6 @@ function points() {
         if (gun[1] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          tint(255, 127);
           ship2 = -100;
           gun[1] = -100;
           perg = 3;
@@ -536,11 +538,7 @@ function points() {
         break;
     }
     if (pergIm == 4 && vida > 0) {
-      fill('orange');
-      rect(200, 300, 400, 200);
-      fill('black');
-      textSize(12);
-      text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
+        telaAtiva = 6;
     }
     else if (pergIm == 4 && vida == 0) {
       fill('orange');
@@ -559,7 +557,7 @@ function mediumF() {
   //isso é a montanha
   fill(88, 234, 65)
   ellipse(600, eliY + 890, 2000, 1000);
-  fill(49, 99, 0)
+  //fill(110, 164, 105)
   rect(0, eliY + 585, 800, 20)
   fill('white');
   //isso faz as montanha subir
@@ -571,25 +569,30 @@ function mediumF() {
   textSize(15)
   text('vidas: ' + vida, 650, 50);
 
-  //esse é os avião kkkk
+  //still needs testing
   image(plane, 200, ship1, 100, 50);
-  if (ship1 >= 130)
-    ship1 -= 4;
-  if (ship1 <= 170)
-    ship1 += 3;
+  if(ponto < 1){
+    if (ship1 >= 130)
+        ship1 -= 4;
+    if (ship1 <= 170)
+        ship1 += 3;
+  }
 
   image(plane, 350, ship2, 100, 50);
-  if (ship2 >= 130)
-    ship2 -= 4;
-  if (ship2 <= 170)
-    ship2 += 3;
-
+  if(ponto < 2){
+    if (ship2 >= 130)
+        ship2 -= 4;
+    if (ship2 <= 170)
+        ship2 += 3;
+  }
+  
   image(plane, 500, ship3, 100, 50);
-  if (ship3 >= 130)
-    ship3 -= 4;
-  if (ship3 <= 170)
-    ship3 += 3;
-
+  if(ponto < 3){
+    if (ship3 >= 130)
+        ship3 -= 4;
+    if (ship3 <= 170)
+        ship3 += 3;
+  }
   //what happens when questions happen
   points();
   //the actual questions
@@ -775,9 +778,9 @@ function mediumF() {
 
 function hardF() {
   image(ceu2, 0, 0, 800, 600);
-  fill(115, 174, 105)
+  fill(115, 174, 105);
   ellipse(600, eliY + 890, 2000, 1000);
-  //fill(29, 79, 20)
+  fill(110, 164, 105);
   rect(0, eliY + 585, 800, 20)
   fill('white');
   //isso faz as montanha subir
@@ -1004,34 +1007,22 @@ function impossibleF() {
   ellipse(600, eliY + 890, 2000, 1000);
   //fill(29, 79, 20)
   rect(0, eliY + 585, 800, 20)
-  fill('white');
+  //fill('white');
   //isso faz as montanha subir
   if (eliY > 0) {
     eliY -= 1.5;
   }
   //esse é o texto da vida
-  fill('white');
+  //fill('white');
   textSize(15)
   text('vidas: ' + vida, 650, 50);
 
   //esse é os avião kkkk
-  image(gib, 200, ship1, 50, 50);
-  if (ship1 >= 130)
-    ship1 -= 4;
-  if (ship1 <= 170)
-    ship1 += 3;
+  image(gub, 200, ship1, 50, 50);
 
-  image(gib, 350, ship2, 50, 50);
-  if (ship2 >= 130)
-    ship2 -= 4;
-  if (ship2 <= 170)
-    ship2 += 3;
+  image(gub, 350, ship2, 50, 50);
 
-  image(gib, 500, ship3, 50, 50);
-  if (ship3 >= 130)
-    ship3 -= 4;
-  if (ship3 <= 170)
-    ship3 += 3;
+  image(gub, 500, ship3, 50, 50);
 
   points();
 
@@ -1206,7 +1197,84 @@ function impossibleF() {
       }
       break;
   }
-  
+}
+
+function ending(){
+    background(0);
+    tempo = 0;
+    fill('white');
+    ellipse(600, eliY + 890, 2000, 1000);
+    //fill(29, 79, 20)
+    rect(0, eliY + 585, 800, 20)
+    //fill('white');
+    //isso faz as montanha subir
+    if (eliY > 0) {
+        eliY -= 1.5;
+    }
+    //esse é o texto da vida
+    //fill('white');
+    textSize(15)
+    text('vidas: ' + vida, 650, 50);
+    image(gubam, 400, finalBoss, 50, 50);
+    if(finalBoss <= 200){
+        finalBoss += 3;
+    }
+    tempo++
+    if(finalBoss >= 200){
+        fill('orange');
+        rect(200, 300, 400, 200);
+        fill('black');
+        textSize(22);
+        text('12 x 4 = __', 296, 385);
+        textSize(18);
+        text('48', 240, 470);
+        text('36', 320, 470);
+        text('49', 400, 470);
+        text('40', 500, 470);
+        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+            fill('white');
+            text('Δ 48', 208, 470);
+            //90 e 122 é igual a z e Z, porque se for enter da bug
+            if (mouseIsPressed) {
+            pew.setVolume(0.1);
+            pew.play();
+            //da um ponto e a pergunta vai 0, pra depois proceder
+            pontoIm++;
+            pergIm = 0;
+            }
+        }
+        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+            fill('white');
+            text('Δ 36', 288, 470);
+            //é pra perder vida msa ta bugando
+            if (mouseIsPressed) {
+            pew.setVolume(0.1);
+            pew.play();
+            inimigoIm++;
+            pergIm = 0;
+            }
+        }
+        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+            fill('white');
+            text('Δ 49', 368, 470);
+            if (mouseIsPressed) {
+            pew.setVolume(0.1);
+            pew.play();
+            inimigoIm++;
+            pergIm = 0;
+            }
+        }
+        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+            fill('white');
+            text('Δ 40', 468, 470);
+            if (mouseIsPressed) {
+            pew.setVolume(0.1);
+            pew.play();
+            pontoIm++;
+            pergIm = 0;
+            }
+        }
+    }
 }
 
 function keyPressed() {
