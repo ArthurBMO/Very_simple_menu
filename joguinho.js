@@ -3,7 +3,7 @@ let moonImage, derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
 //sounds
 var boom = 0, wow = 0, death = 0, oof = 0, pew = 0, slowOof = 0;
 //sprites
-let plane, gub, gub1, gubam, gubama, gubam1;
+let plane, gib, gub1, gubam, gubama, gubam1;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
 //serve pras montanhas subirem
@@ -12,13 +12,13 @@ var eliX = 0, eliY = 210, finalBoss = -100;
 // pro branco. Tudo isso durante o jogo
 var moonY = 65, back = 0, sunY = 0;
 //variaveis para cara dificuldade
-var perg = 1, pergH = 1, pergIm = 1;
+var perg = 1, pergH = 1, pergIm = 1, pergEnd = 1;
 var numeros = [];
 //first 3 are first level, the 4 after is hard the 3 after are impossible
-var gun = [560, 560, 560, 560, 560, 560, 560, 560, 560];
+var gun = [560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560];
 //still left to add gunCounter
-var gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200];
-var ponto = 0, pontoH = 0, pontoIm = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0;
+var gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200];
+var ponto = 0, pontoH = 0, pontoIm = 0, pontoEnd = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0, inimigoEnd = 0;;
 //ship é a posição dos avião, pra eles poder sumir quando a bala chegar
 //add ships
 var ship1 = 150, ship2 = 150, ship3 = 150;
@@ -57,12 +57,15 @@ function setup() {
   createCanvas(800, 600);
   var tempo = Date.now();
   randomSeed(tempo);
-  for (i = 0; i < 12; i++) {
+  for (i = 0; i < 16; i++) {
     if (i < 6) {
       numeros[i] = Math.floor(random(2, 10));
     }
     if (i >= 6 && i < 12) {
       numeros[i] = Math.floor(random(6, 15));
+    }
+    if (i >= 12 && i < 16){
+      numeros[i] = Math.floor(random(10, 15));
     }
   }
 }
@@ -325,7 +328,7 @@ function points() {
       fill('black');
       textSize(12);
       text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
-      if(tempo == 10)
+      if (tempo == 10)
         wow.play();
     }
     else if (perg == 4 && vida == 0) {
@@ -363,8 +366,8 @@ function points() {
         if (gun[4] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          ship2 = -10;
-          gun[4] = -10;
+          ship2 = -100;
+          gun[4] = -100;
           pergH = 3;
         }
         break;
@@ -377,8 +380,8 @@ function points() {
         if (gun[5] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          ship3 = -10;
-          gun[5] = -10;
+          ship3 = -100;
+          gun[5] = -100;
           pergH = 4;
         }
         break;
@@ -472,8 +475,8 @@ function points() {
         if (gun[7] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          ship2 = -10;
-          gun[7] = -10;
+          ship2 = -100;
+          gun[7] = -100;
           pergIm = 3;
         }
         break;
@@ -486,8 +489,8 @@ function points() {
         if (gun[8] == 200) {
           boom.setVolume(0.1);
           boom.play();
-          ship3 = -10;
-          gun[8] = -10;
+          ship3 = -100;
+          gun[8] = -100;
           pergIm = 4;
         }
         break;
@@ -538,7 +541,7 @@ function points() {
         break;
     }
     if (pergIm == 4 && vida > 0) {
-        telaAtiva = 6;
+      telaAtiva = 6;
     }
     else if (pergIm == 4 && vida == 0) {
       fill('orange');
@@ -571,27 +574,27 @@ function mediumF() {
 
   //still needs testing
   image(plane, 200, ship1, 100, 50);
-  if(ponto < 1){
+  if (ship1 != -100) {
     if (ship1 >= 130)
-        ship1 -= 4;
+      ship1 -= 4;
     if (ship1 <= 170)
-        ship1 += 3;
+      ship1 += 3;
   }
 
   image(plane, 350, ship2, 100, 50);
-  if(ponto < 2){
+  if (ship2 != -100) {
     if (ship2 >= 130)
-        ship2 -= 4;
+      ship2 -= 4;
     if (ship2 <= 170)
-        ship2 += 3;
+      ship2 += 3;
   }
-  
+
   image(plane, 500, ship3, 100, 50);
-  if(ponto < 3){
+  if (ship3 != -100) {
     if (ship3 >= 130)
-        ship3 -= 4;
+      ship3 -= 4;
     if (ship3 <= 170)
-        ship3 += 3;
+      ship3 += 3;
   }
   //what happens when questions happen
   points();
@@ -796,24 +799,28 @@ function hardF() {
   text('Tempo restante: ' + Math.floor(countdown / 60), 260, 550);
 
   //esse é os avião kkkk
-    image(plane, 200, ship1, 100, 50);
-  if (ship1 >= 130)
-    ship1 -= 4;
-  if (ship1 <= 170)
-    ship1 += 3;
+  image(plane, 200, ship1, 100, 50);
+  if (ship1 != -100) {
+    if (ship1 >= 130)
+      ship1 -= 4;
+    if (ship1 <= 170)
+      ship1 += 3;
+  }
 
   image(plane, 350, ship2, 100, 50);
-  if (ship2 >= 130)
-    ship2 -= 4;
-  if (ship2 <= 170)
-    ship2 += 3;
-
+  if (ship2 != -100) {
+    if (ship2 >= 130)
+      ship2 -= 4;
+    if (ship2 <= 170)
+      ship2 += 3;
+  }
   image(plane, 500, ship3, 100, 50);
-  if (ship3 >= 130)
-    ship3 -= 4;
-  if (ship3 <= 170)
-    ship3 += 3;
-
+  if (ship3 != -100) {
+    if (ship3 >= 130)
+      ship3 -= 4;
+    if (ship3 <= 170)
+      ship3 += 3;
+  }
   points();
 
   if (Math.floor(countdown / 60) > 0) {
@@ -837,7 +844,7 @@ function hardF() {
           text((numeros[0]) + 'x' + (numeros[1] + 2), 210, 470);
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
             pergH = 0;
@@ -849,7 +856,7 @@ function hardF() {
           //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             pontoH++;
             pergH = 0;
           }
@@ -859,7 +866,7 @@ function hardF() {
           text((numeros[0] + 2) + 'x' + numeros[1], 410, 470);
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -870,7 +877,7 @@ function hardF() {
           if (mouseIsPressed) {
             inimigoH++;
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             pergH = 0;
           }
         }
@@ -895,7 +902,7 @@ function hardF() {
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             pergH = 0;
           }
         }
@@ -905,7 +912,7 @@ function hardF() {
           //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             inimigoH++
             pergH = 0;
           }
@@ -915,7 +922,7 @@ function hardF() {
           text((numeros[2]) + 'x' + (numeros[3]), 410, 470);
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             pontoH++;
             pergH = 0;
           }
@@ -925,7 +932,7 @@ function hardF() {
           text((numeros[2] + 1) + 'x' + (numeros[3] + 3), 510, 470);
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -949,7 +956,7 @@ function hardF() {
           //90 e 122 é igual a z e Z, porque se for enter da bug
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
             pergH = 0;
@@ -961,7 +968,7 @@ function hardF() {
           //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -971,7 +978,7 @@ function hardF() {
           text((numeros[4] + 1) + 'x' + (numeros[5] + 4), 410, 470);
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             inimigoH++;
             pergH = 0;
           }
@@ -981,7 +988,7 @@ function hardF() {
           text((numeros[4]) + 'x' + numeros[5], 510, 470);
           if (mouseIsPressed) {
             pew.setVolume(0.1);
-          pew.play();
+            pew.play();
             pontoH++;
             pergH = 0;
           }
@@ -1002,7 +1009,7 @@ function hardF() {
 
 function impossibleF() {
 
-  image(ceu3, 0 ,0, 800, 600);
+  image(ceu3, 0, 0, 800, 600);
   fill(255, 97, 74);
   ellipse(600, eliY + 890, 2000, 1000);
   //fill(29, 79, 20)
@@ -1018,12 +1025,28 @@ function impossibleF() {
   text('vidas: ' + vida, 650, 50);
 
   //esse é os avião kkkk
-  image(gub, 200, ship1, 50, 50);
+  image(gib, 200, ship1, 50, 50);
+  if (ship1 != -100) {
+    if (ship1 >= 130)
+      ship1 -= 4;
+    if (ship1 <= 170)
+      ship1 += 3;
+  }
 
-  image(gub, 350, ship2, 50, 50);
-
-  image(gub, 500, ship3, 50, 50);
-
+  image(gib, 350, ship2, 50, 50);
+  if (ship2 != -100) {
+    if (ship2 >= 130)
+      ship2 -= 4;
+    if (ship2 <= 170)
+      ship2 += 3;
+  }
+  image(gib, 500, ship3, 50, 50);
+  if (ship3 != -100) {
+    if (ship3 >= 130)
+      ship3 -= 4;
+    if (ship3 <= 170)
+      ship3 += 3;
+  }
   points();
 
   switch (pergIm) {
@@ -1034,27 +1057,27 @@ function impossibleF() {
       textSize(22);
       text('Resolva a equacao', 220, 330);
       //perguntas
-      text(numeros[12] + ' x ' + numeros[13] + ' = __', 296, 385);
+      text('__ x __ = ' + numeros[6] * (numeros[7]), 296, 385);
       textSize(18);
-      //opções
-      text((numeros[12] * numeros[13] + 1), 240, 470);
-      text(numeros[12] * numeros[13], 320, 470);
-      text((numeros[13] + 1), 420, 470);
-      text(numeros[13] + numeros[12], 500, 470);
-      if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+      text((numeros[7]) + 'x' + (numeros[6] + 2), 210, 470);
+      text(numeros[6] + 'x' + (numeros[7]), 310, 470);
+      text((numeros[7] + 2) + 'x' + numeros[6], 410, 470);
+      text((numeros[6] + 1) + 'x' + (numeros[7] + 2), 510, 470);
+      tempo++;
+      if (mouseX >= 200 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
-        text((numeros[12] * numeros[13] + 1), 240, 470);
+        text((numeros[6]) + 'x' + (numeros[7] + 2), 210, 470);
         if (mouseIsPressed) {
-          //da um ponto e a pergunta vai 0, pra depois proceder
           pew.setVolume(0.1);
           pew.play();
+          //da um ponto e a pergunta vai 0, pra depois proceder
           inimigoIm++;
           pergIm = 0;
         }
       }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
-        text(numeros[12] * numeros[13], 320, 470);
+        text(numeros[6] + 'x' + numeros[7], 310, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
@@ -1063,9 +1086,9 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
-        text((numeros[13] + 1), 420, 470);
+        text((numeros[6] + 2) + 'x' + numeros[7], 410, 470);
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1073,13 +1096,13 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
-        text((numeros[13] + numeros[12]), 500, 470);
+        text((numeros[6] + 1) + 'x' + (numeros[7] + 2), 510, 470);
         if (mouseIsPressed) {
+          inimigoIm++;
           pew.setVolume(0.1);
           pew.play();
-          inimigoIm++;
           pergIm = 0;
         }
       }
@@ -1089,28 +1112,28 @@ function impossibleF() {
       rect(200, 300, 400, 200);
       fill('black');
       textSize(22);
-      text('Resolva a equacao', 250, 330);
-      text('20 x 20 = __', 296, 385);
+      text('Resolva a equacao', 220, 330);
+      text('__ x __ = ' + numeros[8] * (numeros[9]), 296, 385);
       textSize(18);
-      text('200', 240, 470);
-      text('420', 320, 470);
-      text('400', 400, 470);
-      text('240', 500, 470);
-      if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+      text((numeros[8] + 2) + 'x' + (numeros[9]), 210, 470);
+      text((numeros[8] + 1) + 'x' + (numeros[9] + 1), 310, 470);
+      text((numeros[8]) + 'x' + (numeros[9]), 410, 470);
+      text((numeros[8] + 1) + 'x' + (numeros[9] + 3), 510, 470);
+      if (mouseX >= 200 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 200', 208, 470);
+        text((numeros[8] + 2) + 'x' + (numeros[9]), 210, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
+          inimigoIm++;
           pew.setVolume(0.1);
           pew.play();
-          inimigoIm++;
           pergIm = 0;
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 420', 288, 470);
+        text((numeros[8] + 1) + 'x' + (numeros[9] + 1), 310, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
@@ -1121,7 +1144,7 @@ function impossibleF() {
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 400', 368, 470);
+        text((numeros[8]) + 'x' + (numeros[9]), 410, 470);
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1131,7 +1154,7 @@ function impossibleF() {
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 240', 468, 470);
+        text((numeros[8] + 1) + 'x' + (numeros[3] + 3), 510, 470);
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1145,28 +1168,28 @@ function impossibleF() {
       rect(200, 300, 400, 200);
       fill('black');
       textSize(22);
-      text('Resolva a equacao', 250, 330);
-      text('12 x 4 = __', 296, 385);
+      text('Resolva a equacao', 220, 330);
+      text('__ x __ = ' + numeros[10] * (numeros[11]), 296, 385);
       textSize(18);
-      text('48', 240, 470);
-      text('36', 320, 470);
-      text('49', 400, 470);
-      text('40', 500, 470);
+      text((numeros[10] + 2) + 'x' + (numeros[11]), 210, 470);
+      text((numeros[10] + 3) + 'x' + (numeros[11]), 310, 470);
+      text((numeros[10] + 1) + 'x' + (numeros[11] + 4), 410, 470);
+      text((numeros[10]) + 'x' + (numeros[11]), 510, 470);
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 48', 208, 470);
+        text((numeros[10] + 2) + 'x' + numeros[11], 210, 470);
         //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
           //da um ponto e a pergunta vai 0, pra depois proceder
-          pontoIm++;
+          inimigoIm++;
           pergIm = 0;
         }
       }
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 36', 288, 470);
+        text((numeros[10] + 3) + 'x' + numeros[11], 310, 470);
         //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
@@ -1177,7 +1200,7 @@ function impossibleF() {
       }
       if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 49', 368, 470);
+        text((numeros[10] + 1) + 'x' + (numeros[11] + 4), 410, 470);
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1187,7 +1210,7 @@ function impossibleF() {
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text('Δ 40', 468, 470);
+        text((numeros[10]) + 'x' + numeros[11], 510, 470);
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1199,83 +1222,138 @@ function impossibleF() {
   }
 }
 
-function ending(){
-    background(0);
-    tempo = 0;
-    fill('white');
-    ellipse(600, eliY + 890, 2000, 1000);
-    //fill(29, 79, 20)
-    rect(0, eliY + 585, 800, 20)
-    //fill('white');
-    //isso faz as montanha subir
-    if (eliY > 0) {
-        eliY -= 1.5;
-    }
-    //esse é o texto da vida
-    //fill('white');
-    textSize(15)
-    text('vidas: ' + vida, 650, 50);
+function ending() {
+  image(ceu3, 0, 0, 800, 600);
+  fill(255, 97, 74);
+  ellipse(600, eliY + 890, 2000, 1000);
+  //fill(29, 79, 20)
+  rect(0, eliY + 585, 800, 20)
+  //fill('white');
+  //isso faz as montanha subir
+  if (eliY > 0) {
+    eliY -= 1.5;
+  }
+  //esse é o texto da vida
+  //fill('white');
+  textSize(15)
+  text('vidas: ' + vida, 650, 50);
+  if (gun[9] != -100){
     image(gubam, 400, finalBoss, 50, 50);
-    if(finalBoss <= 200){
-        finalBoss += 3;
-    }
-    tempo++
-    if(finalBoss >= 200){
-        fill('orange');
-        rect(200, 300, 400, 200);
-        fill('black');
-        textSize(22);
-        text('12 x 4 = __', 296, 385);
-        textSize(18);
-        text('48', 240, 470);
-        text('36', 320, 470);
-        text('49', 400, 470);
-        text('40', 500, 470);
-        if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
-            fill('white');
-            text('Δ 48', 208, 470);
-            //90 e 122 é igual a z e Z, porque se for enter da bug
-            if (mouseIsPressed) {
-            pew.setVolume(0.1);
-            pew.play();
-            //da um ponto e a pergunta vai 0, pra depois proceder
-            pontoIm++;
-            pergIm = 0;
-            }
-        }
-        if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
-            fill('white');
-            text('Δ 36', 288, 470);
-            //é pra perder vida msa ta bugando
-            if (mouseIsPressed) {
-            pew.setVolume(0.1);
-            pew.play();
-            inimigoIm++;
-            pergIm = 0;
-            }
-        }
-        if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
-            fill('white');
-            text('Δ 49', 368, 470);
-            if (mouseIsPressed) {
-            pew.setVolume(0.1);
-            pew.play();
-            inimigoIm++;
-            pergIm = 0;
-            }
-        }
-        if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
-            fill('white');
-            text('Δ 40', 468, 470);
-            if (mouseIsPressed) {
-            pew.setVolume(0.1);
-            pew.play();
-            pontoIm++;
-            pergIm = 0;
-            }
-        }
-    }
+  }
+  else {
+      image(gubama, 400, finalBoss, 50, 50);
 }
+  if (finalBoss <= 200) {
+    finalBoss += 3;
+  }
+  
+  switch(pontoEnd){
+      case 1:
+        fill('black');
+        rect(350, gun[9], 10, 40);
+        //pra bala subir
+        if (gun[9] >= 200) {
+            gun[9] -= 5;
+        }
+        //pra ela colidir com o aviao e puxar a proxima pergunta
+        if (gun[9] == 200) {
+            boom.setVolume(0.1);
+            boom.play();
+            gun[9] = -100;
+            pergEnd = 2;
+        }
+        break;
+  }
+  switch(inimigoEnd){
+      case 1:
+        fill('black');
+        rect(350, gunCounter[9], 10, 40);
+        if (gunCounter[9] <= 560) {
+          gunCounter[9] += 5;
+        }
+        if (gunCounter[9] == 560) {
+          oof.setVolume(0.5);
+          oof.play();
+          gunCounter[9] = 900;
+          vida = vida - 1;
+          pergEnd = 0;
+        }
+        break;
+  }
+  if (finalBoss >= 200) {
+      switch(pergEnd){
+          case 1:
+            fill('orange');
+            rect(200, 300, 400, 200);
+            fill('black');
+            textSize(22);
+            text('__ x __ = '+numeros[12]*numeros[13], 296, 385);
+            textSize(18);
+            text(numeros[12]+'x'+numeros[13], 240, 470);
+            text('36', 320, 470);
+            text('49', 400, 470);
+            text('40', 500, 470);
+            if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+                fill('white');
+                text('Δ 48', 208, 470);
+                //90 e 122 é igual a z e Z, porque se for enter da bug
+                if (mouseIsPressed) {
+                    pew.setVolume(0.1);
+                    pew.play();
+                    pontoEnd = 1;
+                    pergEnd = 0;
+                }
+            }
+            if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+                fill('white');
+                text('Δ 36', 288, 470);
+                //é pra perder vida msa ta bugando
+                if (mouseIsPressed) {
+                    pew.setVolume(0.1);
+                    pew.play();
+                    inimigoEnd=1;
+                    pergEnd = 0;
+                }
+            }
+            break;
+        case 2:
+            fill('orange');
+            rect(200, 300, 400, 200);
+            fill('black');
+            textSize(22);
+            text('__ x __ = '+numeros[12]*numeros[13], 296, 385);
+            textSize(18);
+            text(numeros[12]+'x'+numeros[13], 240, 470);
+            text('36', 320, 470);
+            text('49', 400, 470);
+            text('40', 500, 470);
+            if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+                fill('white');
+                text('Δ 48', 208, 470);
+                //90 e 122 é igual a z e Z, porque se for enter da bug
+                if (mouseIsPressed) {
+                    pew.setVolume(0.1);
+                    pew.play();
+                    //da um ponto e a pergunta vai 0, pra depois proceder
+                    pontoEnd = 2;
+                    pergEnd = 0;
+                }
+            }
+            if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+                fill('white');
+                text('Δ 36', 288, 470);
+                //é pra perder vida msa ta bugando
+                if (mouseIsPressed) {
+                    pew.setVolume(0.1);
+                    pew.play();
+                    inimigoEnd = 2;
+                    pergEnd = 0;
+                }
+            }
+            break;
+        }
+      }
+    }
 
 function keyPressed() {
 
