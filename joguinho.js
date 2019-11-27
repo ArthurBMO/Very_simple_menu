@@ -1,5 +1,5 @@
 //images or background
-let moonImage, derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
+let derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
 //sounds
 var boom = 0, wow = 0, oof = 0, pew = 0, slowOof = 0, power = 0, vaderDeath = 0, weWon = 0;
 //sprites
@@ -52,7 +52,7 @@ function preload() {
   wow = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/pewds_wow.mp3');
   pew = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/pew_shot.mp3');
   power = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/power.mp3');
-  vaderDeath = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/noooooooooo.mp3'); 
+  vaderDeath = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/noooooooooo.mp3');
   weWon = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/champion.mp3');
 }
 
@@ -131,6 +131,7 @@ function difficult() {
   text('[selecionar: mouse]', 20, 590);
   textSize(15);
   fill('white');
+  image(plane, 100, 200, 100, 50);
   text('Selecione a dificuldade', 220, 300);
   image(medium, 100, 350, 110, 100);
   text('Medio', 115, 500);
@@ -1157,7 +1158,7 @@ function impossibleF() {
       }
       if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
-        text((numeros[8] + 1) + 'x' + (numeros[3] + 3), 510, 470);
+        text((numeros[8] + 1) + 'x' + (numeros[9] + 3), 510, 470);
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1249,7 +1250,7 @@ function ending() {
   if (finalBoss <= 200) {
     finalBoss += 3;
   }
-  
+
   switch(pontoEnd){
       case 1:
         fill('black');
@@ -1282,7 +1283,7 @@ function ending() {
             weWon.setVolume(0.1);
             weWon.play();
             pergEnd = 4;
-            
+
         }
       break;
   }
@@ -1316,7 +1317,7 @@ function ending() {
     rect(200, 300, 400, 200);
     fill('black');
     textSize(22);
-    text('CONGRATULATIONS!!', 296, 455);
+    text('CONGRATULATIONS!!', 226, 405);
     if (mouseIsPressed && pergEnd == 4){
         telaAtiva = 0;
         vida = 3, finalBoss = -100, pergEnd = 1, inimigoEnd = 0, inimigoH = 0, pontoH = 0, pergH = 1, ship1 = 150, ship2 = 150, ship3 = 150, countdown = 3600, tempo = 0, gun[9] = 560;
@@ -1397,20 +1398,13 @@ function keyPressed() {
 
   if (keyCode == ESCAPE && (telaAtiva == 5 || telaAtiva == 2 || telaAtiva == 3 ||telaAtiva == 4 || telaAtiva == 6)) {
     telaAtiva = 0;
+    eliX = 0, eliY = 210, finalBoss = -100;
     moonY = 65, back = 0, sunY = 0;
-    perg = 1, pergH = 1, pergIm = 1;
-    gun = [560, 560, 560, 560, 560, 560, 560, 560, 560];
-    gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200];
-    ponto = 0, pontoH = 0, pontoIm = 0;
+    perg = 1, pergH = 1, pergIm = 1, pergEnd = 1;
+    gun = [560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560];
+    gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200];
+    ponto = 0, pontoH = 0, pontoIm = 0, pontoEnd = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0, inimigoEnd = 0;
     ship1 = 150, ship2 = 150, ship3 = 150;
-    vida = 3, inimigo = 0, inimigoH = 0, inimigoIm = 0, tempo = 0;
-    countdown = 3600;
+    vida = 3, tempo = 0, gameMode = '', countdown = 3600, qual = 1;
   }
-  if (keyCode == ESCAPE && telaAtiva == 1) {
-    telaAtiva = 0;
-  }
-  /*for when the tutorial exists
-  if (keyCode == ESCAPE && telaAtiva == 1) {
-  telaAtiva = 0;
-  }*/
 }
