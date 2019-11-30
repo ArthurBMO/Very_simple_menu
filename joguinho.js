@@ -1,30 +1,37 @@
-//images or background
+//variaveis para guardar imagens
 let derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
-//sounds
+
+//variaveis para guardar sons
 var boom = 0, wow = 0, oof = 0, pew = 0, slowOof = 0, power = 0, vaderDeath = 0, weWon = 0, menu = 0;
-//sprites
+
+//inimigos
 let plane, gib, gub1, gubam, gubama, gubam1;
-//é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
+
+//é pra aparecer a tela inicial(0), a da escolha(1) e as regras(5)
 var telaAtiva = 0;
-var musicOn = 'on';
-//serve pras montanhas subirem
-var eliX = 0, eliY = 210, finalBoss = -100;
-//moonY é a posição da lua, sunY do sol e back pra o background sair do preto
-// pro branco. Tudo isso durante o jogo
-var moonY = 65, back = 0, sunY = 0;
-//variaveis para cara dificuldade
+
+//serve pras montanhas subirem e pro boss descer
+var eliY = 210, finalBoss = -100;
+
+//variaveis para perguntas
 var perg = 1, pergH = 1, pergIm = 1, pergEnd = 1;
+
+//para fazer as perguntas aleatorias
 var numeros = [];
-//first 3 are first level, the 4 after is hard the 3 after are impossible
+
+//os primeiros 3 são pra fase 1, os 4 depois são pro fase 2 e os ultimos sao pra fase 3
 var gun = [560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560];
-//still left to add gunCounter
 var gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200];
+
+//são as variaveis dos acertos e dos erros
 var ponto = 0, pontoH = 0, pontoIm = 0, pontoEnd = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0, inimigoEnd = 0;;
-//ship é a posição dos avião, pra eles poder sumir quando a bala chegar
-//add ships
+
+//ship é a posição dos avião, pra eles poder sumir quando a bala chegarships
 var ship1 = 150, ship2 = 150, ship3 = 150;
-//se vida = 0, GAME OVER BITHC
+
 var vida = 3, tempo = 0, tempoD = 0, gameMode = '', countdown = 3600;
+
+//do tutorial, qual para chamar as e a matriz de objetos para guardar as falas
 var qual = 1, falas =
   [
     { fala: " Ola, Tux. Esta havendo uma invasao aerea \nprecisamos de voce para controlar as armas." },
@@ -33,20 +40,29 @@ var qual = 1, falas =
     { fala: "Esses sao os invasores, tu ha de destrui-los!" },
     { fala: "Agora, te vira e escolhe tua dificuldade!" }
   ];
-
+//isso é pra outro momento var musicOn = 'on';
+  
 function preload() {
+  //derp é o personagem no tutorial
   derp = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
+  
+  //foto das fases
   medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/level%201.png');
   hard = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%202.png');
   impossible = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%203.png');
+  
+  //inimigos
   plane = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/plane.png');
   gib = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gib2.png');
   gubam = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gubam2.png');
   gubama = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_gubama1.png');
+  
+  //fundos
   ceu1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
   ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
   ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
   fonte = loadFont('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Apple2.ttf');
+  //sons
   oof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/oof.mp3');
   slowOof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/slow-oof.m4a');
   boom = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/BOOOM.mp3');
@@ -55,7 +71,7 @@ function preload() {
   power = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/power.mp3');
   vaderDeath = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/noooooooooo.mp3');
   weWon = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/champion.mp3');
-  menu = loadSound('https://raw.githubusercontent.com/ArthurBMO/Math_Destroyer/master/sounds/menu.mp3');
+  //menu = loadSound('https://raw.githubusercontent.com/ArthurBMO/Math_Destroyer/master/sounds/menu.mp3');
 }
 
 function setup() {
@@ -1469,8 +1485,7 @@ function keyPressed() {
   //aqui é em todos as fases, para tu sair e o jogo todo resetar
   if (keyCode == ESCAPE && (telaAtiva == 5 || telaAtiva == 2 || telaAtiva == 3 ||telaAtiva == 4 || telaAtiva == 6)) {
     telaAtiva = 0;
-    eliX = 0, eliY = 210, finalBoss = -100;
-    moonY = 65, back = 0, sunY = 0;
+    eliY = 210, finalBoss = -100;
     perg = 1, pergH = 1, pergIm = 1, pergEnd = 1;
     gun = [560, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560];
     gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200];
