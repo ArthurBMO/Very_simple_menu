@@ -1,11 +1,12 @@
 //images or background
 let derp, medium, hard, impossible, ceu1, ceu2, ceu3, fonte;
 //sounds
-var boom = 0, wow = 0, oof = 0, pew = 0, slowOof = 0, power = 0, vaderDeath = 0, weWon = 0;
+var boom = 0, wow = 0, oof = 0, pew = 0, slowOof = 0, power = 0, vaderDeath = 0, weWon = 0, menu = 0;
 //sprites
 let plane, gib, gub1, gubam, gubama, gubam1;
 //é pra aparecer a tela inicial(0), a do jogo(1) e as regras(2)
 var telaAtiva = 0;
+var musicOn = 'on';
 //serve pras montanhas subirem
 var eliX = 0, eliY = 210, finalBoss = -100;
 //moonY é a posição da lua, sunY do sol e back pra o background sair do preto
@@ -23,7 +24,7 @@ var ponto = 0, pontoH = 0, pontoIm = 0, pontoEnd = 0, inimigo = 0, inimigoH = 0,
 //add ships
 var ship1 = 150, ship2 = 150, ship3 = 150;
 //se vida = 0, GAME OVER BITHC
-var vida = 3, tempo = 0, gameMode = '', countdown = 3600;
+var vida = 3, tempo = 0, tempoD = 0, gameMode = '', countdown = 3600;
 var qual = 1, falas =
   [
     { fala: " Ola, Tux. Esta havendo uma invasao aerea \nprecisamos de voce para controlar as armas." },
@@ -54,12 +55,14 @@ function preload() {
   power = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/power.mp3');
   vaderDeath = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/noooooooooo.mp3');
   weWon = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/champion.mp3');
+  menu = loadSound('https://raw.githubusercontent.com/ArthurBMO/Math_Destroyer/master/sounds/menu.mp3');
 }
 
 function setup() {
   createCanvas(800, 600);
   var tempo = Date.now();
   randomSeed(tempo);
+  //gerar numeros aleatorios para perguntas
   for (i = 0; i < 16; i++) {
     if (i < 6) {
       numeros[i] = Math.floor(random(2, 10));
@@ -75,35 +78,52 @@ function setup() {
 
 function draw() {
   background('#222');
-  //É o nome
-  textFont(fonte)
+  textFont(fonte);
+  
+  //Texto principal
   fill('#d0efff');
   textSize(30);
-  text('Fast Thinking', 225, 90);
-  //Texto principal
+  text('Math Destroyer', 185, 150);
+  
   textSize(20);
   fill('#2a9df4');
-  text('Novo Jogo', 140, 300);
-  text('Tutorial', 440, 300);
-  //ENTER PRA INICIR O JOGO
-  if (mouseX <= 400 && mouseX >= 100 && mouseY >= 240 && mouseY <= 350 && telaAtiva == 0) {
+  text('Novo Jogo', 140, 350);
+  text('Tutorial', 440, 350);
+  
+  //checar se o mouse esteja na posição correta
+  if (mouseX <= 400 && mouseX >= 100 && mouseY >= 290 && mouseY <= 400 && telaAtiva == 0) {
+    //se estiver, o nome fica branco
     fill('white');
-    text('Novo Jogo', 140, 300);
+    text('Novo Jogo', 140, 350);
+    //se apertar, ele leva pra outra tela
     if (mouseIsPressed) {
       telaAtiva = 1;
     }
   }
-  if (mouseX <= 580 && mouseX >= 405 && mouseY >= 240 && mouseY <= 350 && telaAtiva == 0) {
+  //o mesmo aqui
+  if (mouseX <= 580 && mouseX >= 405 && mouseY >= 290 && mouseY <= 400 && telaAtiva == 0) {
     fill('white');
-    text('Tutorial', 440, 300);
+    text('Tutorial', 440, 350);
     if (mouseIsPressed) {
       telaAtiva = 5;
     }
   }
+  
   fill('white');
   textSize(16);
   text('[selecionar: mouse]', 20, 590);
-  //ta faltando as regra ainda
+  /* isso era pra ser a musica do menu
+  menu.loop();
+  menu.play();
+  square(770 , 575, 20);
+  if (mouseIsPressed && mouseX >=770 && mouseX <= 790 && mouseY >= 575 && mouseY <= 595 && telaAtiva == 0 && musicOn == 'on'){
+    menu.stop();
+  }
+  else if(mouseIsPressed && mouseX >=770 && mouseX <= 790 && mouseY >= 575 && mouseY <= 595 && telaAtiva == 0 && musicOn == 'on'){
+    menu.play();
+  }*/
+  
+  //para levar para diferentes funções
   switch (telaAtiva) {
     case 1:
       difficult();
@@ -126,26 +146,35 @@ function draw() {
   }
 }
 
+//escolhe a dificuldade do jogo
 function difficult() {
   background('#222');
   text('[selecionar: mouse]', 20, 590);
+  
+  textSize(30);
+  fill('#d0efff');
+  text('Math Destroyer', 185, 150);
+  
   textSize(15);
   fill('white');
-  image(plane, 100, 200, 100, 50);
   text('Selecione a dificuldade', 220, 300);
+  //imagem dos niveis
   image(medium, 100, 350, 110, 100);
   text('Medio', 115, 500);
   image(hard, 320, 350, 110, 100);
   text('Dificil', 325, 500);
   image(impossible, 550, 350, 110, 100);
   text('O ceu ta caindo', 510, 500);
+  //tempoD para impedir o mouse de clicar na tela principal e aqui ao mesmo tempo
+  tempoD++;
   if (mouseX >= 100 && mouseX <= 210 && mouseY <= 455 && mouseY >= 350 && telaAtiva == 1) {
+    //como se fosse um highlight em cima do nivel
     noFill();
-    stroke('green');
-    strokeWeight(10);
+    stroke('#cc5500');
+    strokeWeight(7);
     rect(100, 350, 110, 100);
     noStroke();
-    if (mouseIsPressed && telaAtiva == 1) {
+    if (mouseIsPressed && tempoD >= 15 && telaAtiva == 1) {
       gameMode = 'medium';
       vida = 3;
       telaAtiva = 2;
@@ -154,11 +183,11 @@ function difficult() {
   }
   if (mouseX >= 320 && mouseX <= 430 && mouseY <= 455 && mouseY >= 350 && telaAtiva == 1) {
     noFill();
-    stroke('green');
-    strokeWeight(10);
+    stroke('#cc5500');
+    strokeWeight(7);
     rect(320, 350, 110, 100);
     noStroke();
-    if (mouseIsPressed && telaAtiva == 1) {
+    if (mouseIsPressed && tempoD >= 15 && telaAtiva == 1) {
       gameMode = 'hard';
       vida = 3;
       telaAtiva = 3;
@@ -167,11 +196,11 @@ function difficult() {
   }
   if (mouseX >= 550 && mouseX <= 660 && mouseY <= 455 && mouseY >= 350 && telaAtiva == 1) {
     noFill();
-    stroke('green');
-    strokeWeight(10);
+    stroke('#cc5500');
+    strokeWeight(7);
     rect(550, 350, 110, 100);
     noStroke();
-    if (mouseIsPressed && telaAtiva == 1) {
+    if (mouseIsPressed && tempoD >= 15 && telaAtiva == 1) {
       gameMode = 'impossible';
       vida = 3;
       telaAtiva = 4;
@@ -180,17 +209,22 @@ function difficult() {
   }
 }
 
+//para explicar um pouco do jogo
 function intro() {
   background('#222');
+  
   fill('white')
   rect(0, 500, 800, 300);
   image(derp, 700, 400, 100, 110);
   fill(0);
+  //para as falas aparecerem uma atrás da outra
   switch (qual) {
     case 1:
       text(falas[0].fala, 50, 550);
+      //tempo para impedir o player de clicar todas de uma vez só
       tempo++
-      if (mouseIsPressed && tempo > 120) {
+      if (mouseIsPressed && tempo >= 50) {
+        //qual = 2 leva para proxima fala e reseta o tempo
         qual = 2;
         tempo = 0;
       }
@@ -198,7 +232,7 @@ function intro() {
     case 2:
       text(falas[1].fala, 50, 550);
       tempo++;
-      if (mouseIsPressed && tempo > 120) {
+      if (mouseIsPressed && tempo > 50) {
         qual = 3;
         tempo = 0;
       }
@@ -206,7 +240,7 @@ function intro() {
     case 3:
       text(falas[2].fala, 50, 530);
       tempo++;
-      if (mouseIsPressed && tempo > 120) {
+      if (mouseIsPressed && tempo > 50) {
         qual = 4;
         tempo = 0;
       }
@@ -220,6 +254,8 @@ function intro() {
       if (ship1 <= 170)
         ship1 += 3;
       tempo++;
+      
+      //aqui ele chama a função difficult() usando a telaAtiva
       if (mouseIsPressed && tempo > 120 && telaAtiva == 5) {
         qual = 0;
         tempo = 0;
@@ -231,17 +267,22 @@ function intro() {
 
 }
 
+//isso é para marcação de pontos ou erros
 function points() {
+    
+  //medium para primeira fase
   if (gameMode == 'medium') {
+    //quando o player acerta
     switch (ponto) {
       case 1:
         fill('black');
+        //desenha a bala
         rect(240, gun[0], 10, 40);
-        //pra bala subir
+        //"atira" a bala
         if (gun[0] >= 200) {
           gun[0] -= 5;
         }
-        //pra ela colidir com o aviao e puxar a proxima pergunta
+        //colisão com avião, toca o som, tira o avião e a bala de vista e chama a prox perg
         if (gun[0] == 200) {
           boom.setVolume(0.1);
           boom.play();
@@ -279,14 +320,18 @@ function points() {
         }
         break;
     }
-
+    
+    //aqui é a mesma coisa, só que ao contrario
     switch (inimigo) {
       case 1:
         fill('black');
+        //desenha a bala inimiga
         rect(240, gunCounter[0], 10, 40);
+        //atira a bala inimiga
         if (gunCounter[0] <= 560) {
           gunCounter[0] += 5;
         }
+        //da dano em você, toca o som, perde vida e chama a prox perg
         if (gunCounter[0] == 560) {
           oof.setVolume(0.5);
           oof.play();
@@ -324,14 +369,15 @@ function points() {
         }
         break;
     }
-    //só pra testar mesmo
+    
+    //tela de perdedor ou vencedor
     if (perg == 4 && vida > 0) {
       tempo++
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
-      textSize(12);
-      text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
+      textSize(15);
+      text('Parabens! Voce ganhou!\n     ESC para sair', 242, 385);
       if (tempo == 10)
         wow.play();
     }
@@ -339,20 +385,20 @@ function points() {
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
-      textSize(12);
-      text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+      textSize(13);
+      text('Melhor chance da proxima vez\n       ESC para sair', 220, 390);
     }
   }
+  //para a segunda fase
+  //isso tudo aqui funciona exatamente igual a antes
   else if (gameMode == 'hard') {
     switch (pontoH) {
       case 1:
         fill('black');
         rect(240, gun[3], 10, 40);
-        //pra bala subir
         if (gun[3] >= 200) {
           gun[3] -= 5;
         }
-        //pra ela colidir com o aviao e puxar a proxima pergunta
         if (gun[3] == 200) {
           boom.setVolume(0.1);
           boom.play();
@@ -435,23 +481,25 @@ function points() {
         }
         break;
     }
+    //mesma coisa aqui
     if (pergH == 4 && vida > 0) {
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
-      textSize(12);
-      text('Félicitations, vous avez gagne!\n ESC para sair', 250, 330);
+      textSize(15);
+      text('Parabens! Voce ganhou!\n     ESC para sair', 242, 385);
       countdown = 3600;
     }
     else if (pergH == 4 && vida == 0) {
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
-      textSize(12);
-      text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+      textSize(13);
+      text('Melhor chance da proxima vez\n       ESC para sair', 220, 390);
       countdown = 3600;
     }
   }
+  //para a primeira parte da ultima fase
   if (gameMode == 'impossible') {
     switch (pontoIm) {
       case 1:
@@ -544,6 +592,7 @@ function points() {
         }
         break;
     }
+    //aqui ele chama a segunda parte ao invés de terminar o jogo
     if (pergIm == 4 && vida > 0) {
       telaAtiva = 6;
     }
@@ -551,23 +600,23 @@ function points() {
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
-      textSize(12);
-      text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+      textSize(13);
+      text('Melhor chance da proxima vez\n       ESC para sair', 220, 390);
     }
   }
 }
 
+//primeira fase
 function mediumF() {
-  //OS BACK AUMENTA PRA COR DO FUNDO FICAR CLARA
   tempo = 0;
+  //fundo
   image(ceu1, 0, 0, 800, 600);
-  //isso é a montanha
+  //montanha
   fill(88, 234, 65)
   ellipse(600, eliY + 890, 2000, 1000);
-  //fill(110, 164, 105)
   rect(0, eliY + 585, 800, 20)
   fill('white');
-  //isso faz as montanha subir
+  //isso faz as montanha subirem
   if (eliY > 0) {
     eliY -= 1.5;
   }
@@ -576,8 +625,9 @@ function mediumF() {
   textSize(15)
   text('vidas: ' + vida, 650, 50);
 
-  //still needs testing
+  //para os aviões estarem com parkinson
   image(plane, 200, ship1, 100, 50);
+  //se ele não for atingido, continuará tremendo, se for, ele para e fica fora da tela
   if (ship1 != -100) {
     if (ship1 >= 130)
       ship1 -= 4;
@@ -600,32 +650,41 @@ function mediumF() {
     if (ship3 <= 170)
       ship3 += 3;
   }
-  //what happens when questions happen
+  
+  //ja expliquei a função
   points();
-  //the actual questions
+  
+  //as perguntas
   switch (perg) {
     case 1:
       //fundo das perguntas
       fill('orange');
       rect(200, 300, 400, 200);
+      
+      //texto
       fill('black');
       textSize(22);
       text('Resolva a equacao', 220, 330);
+      
       //perguntas
       text(numeros[0] + ' x __ = ' + numeros[0] * numeros[1], 296, 385);
       textSize(12);
       text('Quanto multiplicado por ' + numeros[0] + ', da ' + numeros[0] * numeros[1] + '?', 210, 420);
-      textSize(25);
+      
       //opções
+      textSize(25);
       text(numeros[1], 240, 470);
       text(numeros[1] * 5, 320, 470);
       text((numeros[0] + 2), 420, 470);
       text(numeros[0] + 3, 500, 470);
+      
+      //se mouse estive no canto certo, a opção fica branca
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text(numeros[1], 240, 470);
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
+          //esse ponto vai chamar a função points() e fazer o que tem que fazer, depois chamar a perg 2
           pew.setVolume(0.1);
           pew.play();
           ponto++;
@@ -635,7 +694,6 @@ function mediumF() {
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text(numeros[1] * 5, 320, 470);
-        //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -667,12 +725,14 @@ function mediumF() {
     case 2:
       fill('orange');
       rect(200, 300, 400, 200);
+      
       fill('black');
       textSize(22);
       text('Resolva a equacao', 220, 330);
       text(numeros[2] + ' x ' + numeros[3] + ' = __', 296, 385);
       textSize(15);
       text(numeros[2] + ' multiplicado por ' + numeros[3] + ', da ?', 210, 420);
+      
       textSize(25);
       text(numeros[2] * numeros[3] * numeros[2], 240, 470);
       text(numeros[3] * numeros[2], 320, 470);
@@ -681,11 +741,9 @@ function mediumF() {
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text(numeros[2] * numeros[3] * numeros[2], 240, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
-          //da um ponto e a pergunta vai 0, pra depois proceder
           inimigo++;
           perg = 0;
         }
@@ -693,7 +751,6 @@ function mediumF() {
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text(numeros[3] * numeros[2], 320, 470);
-        //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -739,7 +796,6 @@ function mediumF() {
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text(numeros[5], 240, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -751,7 +807,6 @@ function mediumF() {
       if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[4] * 3), 320, 470);
-        //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -783,13 +838,14 @@ function mediumF() {
   }
 }
 
+//segunda fase
 function hardF() {
+  //fundo
   image(ceu2, 0, 0, 800, 600);
   fill(115, 174, 105);
   ellipse(600, eliY + 890, 2000, 1000);
   fill(110, 164, 105);
   rect(0, eliY + 585, 800, 20)
-  fill('white');
   //isso faz as montanha subir
   if (eliY > 0) {
     eliY -= 1.5;
@@ -799,6 +855,7 @@ function hardF() {
   textSize(15)
   text('vidas: ' + vida, 650, 50);
   tempo++;
+  //texto pro cronometro de 60s pra baixo
   countdown--;
   text('Tempo restante: ' + Math.floor(countdown / 60), 260, 550);
 
@@ -825,8 +882,10 @@ function hardF() {
     if (ship3 <= 170)
       ship3 += 3;
   }
+  
   points();
-
+  
+  //aqui repete tudo de antes, é um ctrl c + ctrl v, salvo o countdown
   if (Math.floor(countdown / 60) > 0) {
     switch (pergH) {
       case 1:
@@ -857,7 +916,6 @@ function hardF() {
         if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
           fill('white');
           text(numeros[0] + 'x' + numeros[1], 310, 470);
-          //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
             pew.setVolume(0.1);
             pew.play();
@@ -901,7 +959,6 @@ function hardF() {
         if (mouseX >= 200 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
           fill('white');
           text((numeros[2] + 2) + 'x' + (numeros[3]), 210, 470);
-          //90 e 122 é igual a z e Z, porque se for enter da bug
           if (mouseIsPressed) {
             //da um ponto e a pergunta vai 0, pra depois proceder
             inimigoH++;
@@ -913,7 +970,6 @@ function hardF() {
         if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
           fill('white');
           text((numeros[2] + 1) + 'x' + (numeros[3] + 1), 310, 470);
-          //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
             pew.setVolume(0.1);
             pew.play();
@@ -957,7 +1013,6 @@ function hardF() {
         if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
           fill('white');
           text((numeros[4] + 2) + 'x' + numeros[5], 210, 470);
-          //90 e 122 é igual a z e Z, porque se for enter da bug
           if (mouseIsPressed) {
             pew.setVolume(0.1);
             pew.play();
@@ -969,7 +1024,6 @@ function hardF() {
         if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
           fill('white');
           text((numeros[4] + 3) + 'x' + numeros[5], 310, 470);
-          //é pra perder vida msa ta bugando
           if (mouseIsPressed) {
             pew.setVolume(0.1);
             pew.play();
@@ -1000,6 +1054,8 @@ function hardF() {
         break;
     }
   }
+  
+  //isso aqui é que se o tempo chegar a 0, é game over bb
   if (Math.floor(countdown / 60) <= 0) {
     pergH = 0;
     countdown = 50;
@@ -1007,24 +1063,21 @@ function hardF() {
     rect(200, 300, 400, 200);
     fill('black');
     textSize(12);
-    text('mieux de chance la prochaine fois\nESC para sair', 250, 330);
+    text('Melhor chance da proxima vez\n       ESC para sair', 220, 390);
   }
 }
 
+//fase 3 parte 1
 function impossibleF() {
-
   image(ceu3, 0, 0, 800, 600);
   fill(255, 97, 74);
   ellipse(600, eliY + 890, 2000, 1000);
-  //fill(29, 79, 20)
   rect(0, eliY + 585, 800, 20)
-  //fill('white');
   //isso faz as montanha subir
   if (eliY > 0) {
     eliY -= 1.5;
   }
   //esse é o texto da vida
-  //fill('white');
   textSize(15)
   text('vidas: ' + vida, 650, 50);
 
@@ -1051,13 +1104,16 @@ function impossibleF() {
     if (ship3 <= 170)
       ship3 += 3;
   }
+  
   points();
-
+  
+  //tudo funciona igual a antes
   switch (pergIm) {
     case 1:
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
+      
       textSize(22);
       text('Resolva a equacao', 220, 330);
       //perguntas
@@ -1068,7 +1124,7 @@ function impossibleF() {
       text((numeros[7] + 2) + 'x' + numeros[6], 410, 470);
       text((numeros[6] + 1) + 'x' + (numeros[7] + 2), 510, 470);
       tempo++;
-      if (mouseX >= 200 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
+      if (mouseX >= 205 && mouseX <= 299 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
         text((numeros[7]) + 'x' + (numeros[6] + 2), 210, 470);
         if (mouseIsPressed) {
@@ -1079,10 +1135,9 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
+      if (mouseX >= 310 && mouseX <= 399 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
         text(numeros[6] + 'x' + numeros[7], 310, 470);
-        //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1090,7 +1145,7 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
+      if (mouseX >= 410 && mouseX <= 499 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
         text((numeros[7] + 2) + 'x' + numeros[6], 410, 470);
         if (mouseIsPressed) {
@@ -1100,7 +1155,7 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 470 && mouseX <= 580 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
+      if (mouseX >= 510 && mouseX <= 599 && mouseY <= 490 && mouseY >= 410 && tempo >= 50) {
         fill('white');
         text((numeros[6] + 1) + 'x' + (numeros[7] + 2), 510, 470);
         if (mouseIsPressed) {
@@ -1123,10 +1178,9 @@ function impossibleF() {
       text((numeros[8] + 1) + 'x' + (numeros[9] + 1), 310, 470);
       text((numeros[8]) + 'x' + (numeros[9]), 410, 470);
       text((numeros[8] + 1) + 'x' + (numeros[9] + 3), 510, 470);
-      if (mouseX >= 200 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 205 && mouseX <= 299 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[8] + 2) + 'x' + (numeros[9]), 210, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           //da um ponto e a pergunta vai 0, pra depois proceder
           inimigoIm++;
@@ -1135,10 +1189,9 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 310 && mouseX <= 399 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[8] + 1) + 'x' + (numeros[9] + 1), 310, 470);
-        //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1146,7 +1199,7 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 410 && mouseX <= 499 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[8]) + 'x' + (numeros[9]), 410, 470);
         if (mouseIsPressed) {
@@ -1156,7 +1209,7 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 510 && mouseX <= 599 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[8] + 1) + 'x' + (numeros[9] + 3), 510, 470);
         if (mouseIsPressed) {
@@ -1179,10 +1232,9 @@ function impossibleF() {
       text((numeros[10] + 3) + 'x' + (numeros[11]), 310, 470);
       text((numeros[10] + 1) + 'x' + (numeros[11] + 4), 410, 470);
       text((numeros[10]) + 'x' + (numeros[11]), 510, 470);
-      if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 205 && mouseX <= 299 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[10] + 2) + 'x' + numeros[11], 210, 470);
-        //90 e 122 é igual a z e Z, porque se for enter da bug
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1191,10 +1243,9 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 288 && mouseX <= 367 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 310 && mouseX <= 399 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[10] + 3) + 'x' + numeros[11], 310, 470);
-        //é pra perder vida msa ta bugando
         if (mouseIsPressed) {
           pew.setVolume(0.1);
           pew.play();
@@ -1202,7 +1253,7 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 368 && mouseX <= 460 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 410 && mouseX <= 499 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[10] + 1) + 'x' + (numeros[11] + 4), 410, 470);
         if (mouseIsPressed) {
@@ -1212,7 +1263,7 @@ function impossibleF() {
           pergIm = 0;
         }
       }
-      if (mouseX >= 470 && mouseX <= 560 && mouseY <= 490 && mouseY >= 410) {
+      if (mouseX >= 510 && mouseX <= 599 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
         text((numeros[10]) + 'x' + numeros[11], 510, 470);
         if (mouseIsPressed) {
@@ -1226,31 +1277,35 @@ function impossibleF() {
   }
 }
 
-function ending() {
+//fase 3 parte 2
+function ending() { 
+  //fundo
   image(ceu3, 0, 0, 800, 600);
   fill(255, 97, 74);
   ellipse(600, eliY + 890, 2000, 1000);
-  //fill(29, 79, 20)
   rect(0, eliY + 585, 800, 20)
-  //fill('white');
   //isso faz as montanha subir
   if (eliY > 0) {
     eliY -= 1.5;
   }
   //esse é o texto da vida
-  //fill('white');
   textSize(15)
   text('vidas: ' + vida, 650, 50);
+  
+  //antes do tiro, gubam esta na nave, depois do tiro gubam esta sem a nave e puto
   if (gun[9] != -100){
     image(gubam, 400, finalBoss, 50, 50);
   }
   else {
       image(gubama, 400, finalBoss, 50, 50);
 }
+
+  //pra gubam descer dos seus na nave
   if (finalBoss <= 200) {
     finalBoss += 3;
   }
-
+  
+  //isso seria points(), mas achei melhor deixar aqui
   switch(pontoEnd){
       case 1:
         fill('black');
@@ -1259,11 +1314,12 @@ function ending() {
         if (gun[9] >= 240) {
             gun[9] -= 5;
         }
-        //pra ela colidir com o aviao e puxar a proxima pergunta
+        //pra ela colidir com gubam e puxar a proxima pergunta
         if (gun[9] == 240) {
             boom.setVolume(0.1);
             boom.play();
             gun[9] = -100;
+            //you underestimate my power!
             power.setVolume(0.5);
             power.play();
             pergEnd = 2;
@@ -1275,7 +1331,7 @@ function ending() {
         if (gun[10] >= 240) {
             gun[10] -= 5;
         }
-        //pra ela colidir com o aviao e puxar a proxima pergunta
+        //fim de gubam
         if (gun[10] == 240) {
             boom.play();
             vaderDeath.play();
@@ -1287,6 +1343,8 @@ function ending() {
         }
       break;
   }
+  
+  //1 hit kill com gubam
   switch(inimigoEnd){
       case 1:
         fill('black');
@@ -1302,27 +1360,39 @@ function ending() {
         }
         break;
   }
+  
+  //no caso de tu morrer com gubam
   if(pergEnd == 3){
     fill('orange');
     rect(200, 300, 400, 200);
     fill('black');
     textSize(22);
-    text('ur ded', 296, 455);
+    text('morreu morreu\nESC para sair', 250, 385);
+    
+    //para as variaveis voltarem ao que deveriam pro player poder jogar de novo
     if (mouseIsPressed && pergEnd == 3){
-        telaAtiva = 0,
-        vida = 3, finalBoss = -100, pergEnd = 1, inimigoEnd = 0, inimigoH = 0, pontoH = 0, pergH = 1, ship1 = 150, ship2 = 150, ship3 = 150, countdown = 3600, tempo = 0;
+        telaAtiva = 0;
+        vida = 3, finalBoss = -100, pergEnd = 1, inimigoEnd = 0, inimigoH = 0, pontoH = 0, pergH = 1, ship1 = 150, ship2 = 150, ship3 = 150, countdown = 3600, tempo = 0, gun[9] = 560;
     }
-  }else if(pergEnd == 4){
+  }
+  
+  //no caso de tu ganhar contra gubam
+  else if(pergEnd == 4){
     fill('orange');
     rect(200, 300, 400, 200);
     fill('black');
     textSize(22);
-    text('CONGRATULATIONS!!', 226, 405);
+    text('CONGRATULATIONS!!\n  ESC pra sair', 226, 385);
+    
+    //para as variaveis voltarem ao que deveriam pro player poder jogar de novo
     if (mouseIsPressed && pergEnd == 4){
         telaAtiva = 0;
         vida = 3, finalBoss = -100, pergEnd = 1, inimigoEnd = 0, inimigoH = 0, pontoH = 0, pergH = 1, ship1 = 150, ship2 = 150, ship3 = 150, countdown = 3600, tempo = 0, gun[9] = 560;
     }
 }
+
+  //as perguntas pro gubam
+  //tudo aqui funciona exatamente como antes, porem com duas perguntas
   if (finalBoss >= 200) {
       switch(pergEnd){
           case 1:
@@ -1337,7 +1407,6 @@ function ending() {
             if (mouseX >= 240 && mouseX <= 385 && mouseY <= 490 && mouseY >= 410) {
                 fill('white');
                 text(numeros[12]+'x'+numeros[13], 260, 470);
-                //90 e 122 é igual a z e Z, porque se for enter da bug
                 if (mouseIsPressed) {
                     pew.setVolume(0.1);
                     pew.play();
@@ -1345,10 +1414,11 @@ function ending() {
                     pergEnd = 0;
                 }
             }
+            
+            //errou morreu
             if (mouseX >= 410 && mouseX <= 580 && mouseY <= 490 && mouseY >= 410) {
                 fill('white');
                 text((numeros[13]+3)+'x'+(numeros[13]-2), 450, 470);
-                //é pra perder vida msa ta bugando
                 if (mouseIsPressed) {
                     pew.setVolume(0.1);
                     pew.play();
@@ -1369,7 +1439,6 @@ function ending() {
             if (mouseX >= 240 && mouseX <= 385 && mouseY <= 490 && mouseY >= 410) {
                 fill('white');
                 text((numeros[14]+numeros[15]+numeros[14]), 260, 470);
-                //90 e 122 é igual a z e Z, porque se for enter da bug
                 if (mouseIsPressed) {
                     pew.setVolume(0.1);
                     pew.play();
@@ -1378,10 +1447,11 @@ function ending() {
                     pergEnd = 0;
                 }
             }
+            
+            //errou morreu
             if (mouseX >= 410 && mouseX <= 580 && mouseY <= 490 && mouseY >= 410) {
                 fill('white');
                 text((numeros[14]*numeros[15]), 450, 470);
-                //é pra perder vida msa ta bugando
                 if (mouseIsPressed) {
                     pew.setVolume(0.1);
                     pew.play();
@@ -1395,7 +1465,8 @@ function ending() {
     }
 
 function keyPressed() {
-
+    
+  //aqui é em todos as fases, para tu sair e o jogo todo resetar
   if (keyCode == ESCAPE && (telaAtiva == 5 || telaAtiva == 2 || telaAtiva == 3 ||telaAtiva == 4 || telaAtiva == 6)) {
     telaAtiva = 0;
     eliX = 0, eliY = 210, finalBoss = -100;
@@ -1405,6 +1476,12 @@ function keyPressed() {
     gunCounter = [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200];
     ponto = 0, pontoH = 0, pontoIm = 0, pontoEnd = 0, inimigo = 0, inimigoH = 0, inimigoIm = 0, inimigoEnd = 0;
     ship1 = 150, ship2 = 150, ship3 = 150;
-    vida = 3, tempo = 0, gameMode = '', countdown = 3600, qual = 1;
+    vida = 3, tempo = 0, tempoD = 0, gameMode = '', countdown = 3600, qual = 1;
+  }
+  
+  //isso é pra voltar de da telaAtiva 1 para 0
+  if (keyCode == ESCAPE && telaAtiva == 1){
+      tempoD = 0;
+      telaAtiva = 0;
   }
 }
