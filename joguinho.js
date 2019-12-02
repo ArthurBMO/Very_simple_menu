@@ -29,7 +29,7 @@ var ponto = 0, pontoH = 0, pontoIm = 0, pontoEnd = 0, inimigo = 0, inimigoH = 0,
 //ship é a posição dos avião, pra eles poder sumir quando a bala chegarships
 var ship1 = 150, ship2 = 150, ship3 = 150;
 
-var vida = 3, tempo = 0, tempoD = 0, gameMode = '', countdown = 3600;
+var vida = 3, tempo = 0, tempoD = 0, tempoData, gameMode = '', countdown = 3600;
 
 //do tutorial, qual para chamar as e a matriz de objetos para guardar as falas
 var qual = 1, falas =
@@ -76,8 +76,8 @@ function preload() {
 
 function setup() {
   createCanvas(800, 600);
-  var tempo = Date.now();
-  randomSeed(tempo);
+  tempoData = Date.now();
+  randomSeed(tempoData);
   //gerar numeros aleatorios para perguntas
   for (i = 0; i < 16; i++) {
     if (i < 6) {
