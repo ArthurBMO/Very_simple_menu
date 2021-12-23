@@ -44,34 +44,34 @@ var qual = 1, falas =
   
 function preload() {
   //derp é o personagem no tutorial
-  derp = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
+  derp = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
   
   //foto das fases
-  medium = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/level%201.png');
-  hard = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%202.png');
-  impossible = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/fase%203.png');
+  medium = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/maps/level%201.png');
+  hard = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/maps/fase%202.png');
+  impossible = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/maps/fase%203.png');
   
   //inimigos
-  plane = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/plane.png');
-  gib = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gib2.png');
-  gubam = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_sprite_gubam2.png');
-  gubama = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Layer%201_gubama1.png');
+  plane = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/plane.png');
+  gib = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/Layer%201_sprite_gib2.png');
+  gubam = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/Layer%201_sprite_gubam2.png');
+  gubama = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/Layer%201_gubama1.png');
   
   //fundos
-  ceu1 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
-  ceu2 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
-  ceu3 = loadImage('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
-  fonte = loadFont('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/Apple2.ttf');
+  ceu1 = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/maps/bg%20c%C3%A9u%201.png');
+  ceu2 = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/maps/bg%20c%C3%A9u%202.png');
+  ceu3 = loadImage('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/maps/bg%20c%C3%A9u%203.png');
+  fonte = loadFont('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/Apple2.ttf');
   //sons
-  oof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/oof.mp3');
-  slowOof = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/slow-oof.m4a');
-  boom = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/BOOOM.mp3');
-  wow = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/pewds_wow.mp3');
-  pew = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/pew_shot.mp3');
-  power = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/power.mp3');
-  vaderDeath = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/noooooooooo.mp3');
-  weWon = loadSound('https://raw.githubusercontent.com/ArthurBMO/Very_simple_menu/master/sounds/champion.mp3');
-  //menu = loadSound('https://raw.githubusercontent.com/ArthurBMO/Math_Destroyer/master/sounds/menu.mp3');
+  oof = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/oof.mp3');
+  slowOof = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/slow-oof.m4a');
+  boom = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/BOOOM.mp3');
+  wow = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/pewds_wow.mp3');
+  pew = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/pew_shot.mp3');
+  power = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/power.mp3');
+  vaderDeath = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/noooooooooo.mp3');
+  weWon = loadSound('https://raw.githubusercontent.com/arthurbttf/Very_simple_menu/master/sounds/champion.mp3');
+  //menu = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/menu.mp3');
 }
 
 function setup() {
