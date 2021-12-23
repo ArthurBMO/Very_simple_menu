@@ -63,8 +63,8 @@ function preload() {
   ceu3 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/bg%20c%C3%A9u%203.png');
   fonte = loadFont('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/Apple2.ttf');
   //sons
-  oof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/slow-oof.m4a');
   slowOof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/slow-oof.m4a');
+  oof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/oof.m4a');
   boom = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/BOOOM.mp3');
   wow = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/pewds_wow.mp3');
   pew = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/pew_shot.mp3');
