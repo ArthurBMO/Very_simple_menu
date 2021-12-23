@@ -44,34 +44,34 @@ var qual = 1, falas =
   
 function preload() {
   //derp é o personagem no tutorial
-  derp = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
-  
+  derp = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/rage_guy_herp_derp_by_rober_raik-d4cwz17.png');
+
   //foto das fases
-  medium = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/level%201.png');
-  hard = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/fase%202.png');
-  impossible = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/fase%203.png');
-  
+  medium = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/maps/level%201.png');
+  hard = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/maps/fase%202.png');
+  impossible = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/maps/fase%203.png');
+
   //inimigos
-  plane = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/plane.png');
-  gib = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/Layer%201_sprite_gib2.png');
-  gubam = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/Layer%201_sprite_gubam2.png');
-  gubama = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/Layer%201_gubama1.png');
-  
+  plane = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/plane.png');
+  gib = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/Layer%201_sprite_gib2.png');
+  gubam = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/Layer%201_sprite_gubam2.png');
+  gubama = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/Layer%201_gubama1.png');
+
   //fundos
-  ceu1 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/bg%20c%C3%A9u%201.png');
-  ceu2 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/bg%20c%C3%A9u%202.png');
-  ceu3 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/maps/bg%20c%C3%A9u%203.png');
-  fonte = loadFont('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/Apple2.ttf');
+  ceu1 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/maps/bg%20c%C3%A9u%201.png');
+  ceu2 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/maps/bg%20c%C3%A9u%202.png');
+  ceu3 = loadImage('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/maps/bg%20c%C3%A9u%203.png');
+  fonte = loadFont('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/Apple2.ttf');
   //sons
-  oof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/oof.mp3');
-  slowOof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/slow-oof.m4a');
-  boom = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/BOOOM.mp3');
-  wow = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/pewds_wow.mp3');
-  pew = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/pew_shot.mp3');
-  power = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/power.mp3');
-  vaderDeath = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/noooooooooo.mp3');
-  weWon = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/champion.mp3');
-  //menu = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/master/sounds/menu.mp3');
+  oof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/oof.mp3');
+  slowOof = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/slow-oof.m4a');
+  boom = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/BOOOM.mp3');
+  wow = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/pewds_wow.mp3');
+  pew = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/pew_shot.mp3');
+  power = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/power.mp3');
+  vaderDeath = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/noooooooooo.mp3');
+  weWon = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/champion.mp3');
+  //menu = loadSound('https://raw.githubusercontent.com/arthurbttf/Math_Destroyer/tree/master/sounds/menu.mp3');
 }
 
 function setup() {
@@ -95,17 +95,17 @@ function setup() {
 function draw() {
   background('#222');
   textFont(fonte);
-  
+
   //Texto principal
   fill('#d0efff');
   textSize(30);
   text('Math Destroyer', 185, 150);
-  
+
   textSize(20);
   fill('#2a9df4');
   text('Novo Jogo', 140, 350);
   text('Tutorial', 440, 350);
-  
+
   //checar se o mouse esteja na posição correta
   if (mouseX <= 400 && mouseX >= 100 && mouseY >= 290 && mouseY <= 400 && telaAtiva == 0) {
     //se estiver, o nome fica branco
@@ -124,7 +124,7 @@ function draw() {
       telaAtiva = 5;
     }
   }
-  
+
   fill('white');
   textSize(16);
   text('[selecionar: mouse]', 20, 590);
@@ -138,7 +138,7 @@ function draw() {
   else if(mouseIsPressed && mouseX >=770 && mouseX <= 790 && mouseY >= 575 && mouseY <= 595 && telaAtiva == 0 && musicOn == 'on'){
     menu.play();
   }*/
-  
+
   //para levar para diferentes funções
   switch (telaAtiva) {
     case 1:
@@ -166,11 +166,11 @@ function draw() {
 function difficult() {
   background('#222');
   text('[selecionar: mouse]', 20, 590);
-  
+
   textSize(30);
   fill('#d0efff');
   text('Math Destroyer', 185, 150);
-  
+
   textSize(15);
   fill('white');
   text('Selecione a dificuldade', 220, 300);
@@ -228,7 +228,7 @@ function difficult() {
 //para explicar um pouco do jogo
 function intro() {
   background('#222');
-  
+
   fill('white')
   rect(0, 500, 800, 300);
   image(derp, 700, 400, 100, 110);
@@ -270,7 +270,7 @@ function intro() {
       if (ship1 <= 170)
         ship1 += 3;
       tempo++;
-      
+
       //aqui ele chama a função difficult() usando a telaAtiva
       if (mouseIsPressed && tempo > 120 && telaAtiva == 5) {
         qual = 0;
@@ -285,7 +285,7 @@ function intro() {
 
 //isso é para marcação de pontos ou erros
 function points() {
-    
+
   //medium para primeira fase
   if (gameMode == 'medium') {
     //quando o player acerta
@@ -336,7 +336,7 @@ function points() {
         }
         break;
     }
-    
+
     //aqui é a mesma coisa, só que ao contrario
     switch (inimigo) {
       case 1:
@@ -385,7 +385,7 @@ function points() {
         }
         break;
     }
-    
+
     //tela de perdedor ou vencedor
     if (perg == 4 && vida > 0) {
       tempo++
@@ -666,34 +666,34 @@ function mediumF() {
     if (ship3 <= 170)
       ship3 += 3;
   }
-  
+
   //ja expliquei a função
   points();
-  
+
   //as perguntas
   switch (perg) {
     case 1:
       //fundo das perguntas
       fill('orange');
       rect(200, 300, 400, 200);
-      
+
       //texto
       fill('black');
       textSize(22);
       text('Resolva a equacao', 220, 330);
-      
+
       //perguntas
       text(numeros[0] + ' x __ = ' + numeros[0] * numeros[1], 296, 385);
       textSize(12);
       text('Quanto multiplicado por ' + numeros[0] + ', da ' + numeros[0] * numeros[1] + '?', 210, 420);
-      
+
       //opções
       textSize(25);
       text(numeros[1], 240, 470);
       text(numeros[1] * 5, 320, 470);
       text((numeros[0] + 2), 420, 470);
       text(numeros[0] + 3, 500, 470);
-      
+
       //se mouse estive no canto certo, a opção fica branca
       if (mouseX >= 208 && mouseX <= 287 && mouseY <= 490 && mouseY >= 410) {
         fill('white');
@@ -741,14 +741,14 @@ function mediumF() {
     case 2:
       fill('orange');
       rect(200, 300, 400, 200);
-      
+
       fill('black');
       textSize(22);
       text('Resolva a equacao', 220, 330);
       text(numeros[2] + ' x ' + numeros[3] + ' = __', 296, 385);
       textSize(15);
       text(numeros[2] + ' multiplicado por ' + numeros[3] + ', da ?', 210, 420);
-      
+
       textSize(25);
       text(numeros[2] * numeros[3] * numeros[2], 240, 470);
       text(numeros[3] * numeros[2], 320, 470);
@@ -898,9 +898,9 @@ function hardF() {
     if (ship3 <= 170)
       ship3 += 3;
   }
-  
+
   points();
-  
+
   //aqui repete tudo de antes, é um ctrl c + ctrl v, salvo o countdown
   if (Math.floor(countdown / 60) > 0) {
     switch (pergH) {
@@ -1070,7 +1070,7 @@ function hardF() {
         break;
     }
   }
-  
+
   //isso aqui é que se o tempo chegar a 0, é game over bb
   if (Math.floor(countdown / 60) <= 0) {
     pergH = 0;
@@ -1120,16 +1120,16 @@ function impossibleF() {
     if (ship3 <= 170)
       ship3 += 3;
   }
-  
+
   points();
-  
+
   //tudo funciona igual a antes
   switch (pergIm) {
     case 1:
       fill('orange');
       rect(200, 300, 400, 200);
       fill('black');
-      
+
       textSize(22);
       text('Resolva a equacao', 220, 330);
       //perguntas
@@ -1294,7 +1294,7 @@ function impossibleF() {
 }
 
 //fase 3 parte 2
-function ending() { 
+function ending() {
   //fundo
   image(ceu3, 0, 0, 800, 600);
   fill(255, 97, 74);
@@ -1307,7 +1307,7 @@ function ending() {
   //esse é o texto da vida
   textSize(15)
   text('vidas: ' + vida, 650, 50);
-  
+
   //antes do tiro, gubam esta na nave, depois do tiro gubam esta sem a nave e puto
   if (gun[9] != -100){
     image(gubam, 400, finalBoss, 50, 50);
@@ -1320,7 +1320,7 @@ function ending() {
   if (finalBoss <= 200) {
     finalBoss += 3;
   }
-  
+
   //isso seria points(), mas achei melhor deixar aqui
   switch(pontoEnd){
       case 1:
@@ -1359,7 +1359,7 @@ function ending() {
         }
       break;
   }
-  
+
   //1 hit kill com gubam
   switch(inimigoEnd){
       case 1:
@@ -1376,7 +1376,7 @@ function ending() {
         }
         break;
   }
-  
+
   //no caso de tu morrer com gubam
   if(pergEnd == 3){
     fill('orange');
@@ -1384,14 +1384,14 @@ function ending() {
     fill('black');
     textSize(22);
     text('morreu morreu\nESC para sair', 250, 385);
-    
+
     //para as variaveis voltarem ao que deveriam pro player poder jogar de novo
     if (mouseIsPressed && pergEnd == 3){
         telaAtiva = 0;
         vida = 3, finalBoss = -100, pergEnd = 1, inimigoEnd = 0, inimigoH = 0, pontoH = 0, pergH = 1, ship1 = 150, ship2 = 150, ship3 = 150, countdown = 3600, tempo = 0, gun[9] = 560;
     }
   }
-  
+
   //no caso de tu ganhar contra gubam
   else if(pergEnd == 4){
     fill('orange');
@@ -1399,7 +1399,7 @@ function ending() {
     fill('black');
     textSize(22);
     text('CONGRATULATIONS!!\n  ESC pra sair', 226, 385);
-    
+
     //para as variaveis voltarem ao que deveriam pro player poder jogar de novo
     if (mouseIsPressed && pergEnd == 4){
         telaAtiva = 0;
@@ -1430,7 +1430,7 @@ function ending() {
                     pergEnd = 0;
                 }
             }
-            
+
             //errou morreu
             if (mouseX >= 410 && mouseX <= 580 && mouseY <= 490 && mouseY >= 410) {
                 fill('white');
@@ -1463,7 +1463,7 @@ function ending() {
                     pergEnd = 0;
                 }
             }
-            
+
             //errou morreu
             if (mouseX >= 410 && mouseX <= 580 && mouseY <= 490 && mouseY >= 410) {
                 fill('white');
@@ -1481,7 +1481,7 @@ function ending() {
     }
 
 function keyPressed() {
-    
+
   //aqui é em todos as fases, para tu sair e o jogo todo resetar
   if (keyCode == ESCAPE && (telaAtiva == 5 || telaAtiva == 2 || telaAtiva == 3 ||telaAtiva == 4 || telaAtiva == 6)) {
     telaAtiva = 0;
@@ -1493,7 +1493,7 @@ function keyPressed() {
     ship1 = 150, ship2 = 150, ship3 = 150;
     vida = 3, tempo = 0, tempoD = 0, gameMode = '', countdown = 3600, qual = 1;
   }
-  
+
   //isso é pra voltar de da telaAtiva 1 para 0
   if (keyCode == ESCAPE && telaAtiva == 1){
       tempoD = 0;
